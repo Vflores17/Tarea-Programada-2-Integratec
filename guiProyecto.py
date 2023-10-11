@@ -1,9 +1,25 @@
 from tkinter import * 
 from funcionesProyecto2 import *
 from tkinter import messagebox
-
+import random
 
 ventana = Tk()
+totalAdmitidos={"CTLSC":0,"CTLSJ":0,"CAL":0,"CTCC":0,"CAA":0}
+#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
+
+def distribuirAdmitidos(totalAdmitidos, estructuraCarrerasCantidad):
+    for sede, carreras in estructuraCarrerasCantidad.items():
+        total_cupos = totalAdmitidos[sede]
+
+        for carrera in carreras[:-1]:
+            cupos = total_cupos // random.randint(4, 9)
+            carrera[1] = cupos
+            total_cupos -= cupos
+
+        carrera = carreras[-1]
+        carrera[1] = total_cupos
+
+    return estructuraCarrerasCantidad
 
 
 def crearEstructuraEstudiantesCarreraSede():
@@ -18,39 +34,42 @@ def crearEstructuraEstudiantesCarreraSede():
     return estructuraAdmitidosCarrera
 
 def estudiantesPorSede():
-
-    def actualizarMatriz():
-        for i in range(1,5):
-            for j in range(1,3):
-                matrizLabel[i][j].destroy()
-        for i in range(1,5):
-            for j in range(1,3):
-                label = tk.Label(ventanaEstudiantesSede,width=45 if j==2 else 10,height=3,relief="solid")
-                label.grid(column=j, row=i)
-                label.place(x=30+(j*75), y=45+(i*40))
-                matrizLabel[i][j]=label
-                if i==1 and j==1:
-                    matrizLabel[i][j].config(text=estructuraCarrerasCantidad.get("CTLSC",""))
-                elif i==2 and j==1:
-                    matrizLabel[i][j].config(text=estructuraCarrerasCantidad.get("CTLSJ",""))
-                elif i==3 and j==1:
-                    matrizLabel[i][j].config(text=estructuraCarrerasCantidad.get("CAL",""))
-                elif i==4 and j==1:
-                    matrizLabel[i][j].config(text=estructuraCarrerasCantidad.get("CTCC",""))
-                elif i==5 and j==1:
-                    matrizLabel[i][j].config(text=estructuraCarrerasCantidad.get("CAA",""))
-
-    def verificarAdmitidos():
-        for sede in estructuraCarrerasCantidad.keys():
-            for carrera in estructuraCarrerasCantidad[sede]:
-                if carrera[1]==0:
-                    return False
-        return True
     
+    def actualizarMatriz():
+        for i in range(1, 6):
+            for j in range(1, 3):
+                matrizLabel[i][j].destroy()
+                
+        sedes = totalAdmitidos.keys()
+        
+        for i, sede in enumerate(sedes, start=1):
+            for j in range(1, 3):
+                if j == 1:
+                    contenido = totalAdmitidos.get(sede, "")
+                else:
+                    contenido = "\n".join([f"{carrera[0]}: {carrera[1]}" for carrera in estructuraCarrerasCantidad.get(sede, [])])
+
+                text = tk.Text(ventanaEstudiantesSede, width=72 if j == 2 else 10, height=4, relief="solid")
+                text.grid(column=j, row=i)
+                text.place(x=30 + (j * 75), y=40 + (i * 70))
+                text.insert("1.0", contenido)
+                text.tag_configure("center", justify="center")
+                text.tag_add("center", "1.0", "end")
+                text.config(state="disabled")
+                matrizLabel[i][j] = text
+
+   
+    def verificarAdmitidos():
+        for sede in totalAdmitidos.keys():
+            if totalAdmitidos[sede]==0:
+                return False
+        return True
+
     def recolectarInfo(sede,cajaTexto,menuAdmitidos):
         cantidad=cajaTexto.get()
         if cantidad.isdigit():
-            estructuraCarrerasCantidad[sede]=cantidad
+            totalAdmitidos[sede]=int(cantidad)
+            distribuirAdmitidos(totalAdmitidos,estructuraCarrerasCantidad)
             menuAdmitidos.destroy()
         else:
             messagebox.showerror("Error", "Debe ingresar valores númericos enteros unicamente")
@@ -72,12 +91,12 @@ def estudiantesPorSede():
     def mostrarMatrizVacia():
 
         diccionarioVacio={(0,0):"Sede", (0,1):"Admitidos",(0,2):"Cantidad de estudiantes por carrera", (1,0):"CTLSC", (2,0):"CTLSJ", (3,0):"CAL", (4,0):"CTCC", (5,0):"CAA"}
-        for i in range(5):       
+        for i in range(6):       
             for j in range(3):
                 info=diccionarioVacio.get((i,j),"")
-                label = tk.Label(ventanaEstudiantesSede,width=45 if j==2 else 10,height=3,relief="solid")
+                label = tk.Label(ventanaEstudiantesSede,width=82 if j==2 else 10,height=4,relief="solid",anchor=CENTER)
                 label.grid(column=j, row=i)
-                label.place(x=30+(j*75), y=45+(i*40))
+                label.place(x=30+(j*75), y=45+(i*69))
                 matrizLabel[i][j]=label
                 matrizLabel[i][j].config(text=info)
           
@@ -93,7 +112,7 @@ def estudiantesPorSede():
     ventana.withdraw()
     ventanaEstudiantesSede=tk.Toplevel(ventana)
     ventanaEstudiantesSede.title("Estudiantes por sede")
-    ventanaEstudiantesSede.geometry("550x300")
+    ventanaEstudiantesSede.geometry("825x525")
     ventanaEstudiantesSede.config(bg="lightblue") 
 
     #Texto en la ventana
@@ -103,7 +122,7 @@ def estudiantesPorSede():
 
     #Botones
     botonVolver = tk.Button(ventanaEstudiantesSede, text="Volver",font=("Verdana", 10),bg="red",command=cerrarVentana,fg="white")
-    botonVolver.place(x=475, y=260)
+    botonVolver.place(x=750, y=485)
 
     #Menu desplegable
     menu = tk.Menu(ventanaEstudiantesSede)
@@ -180,6 +199,5 @@ estructuraCarrerasCantidad=crearEstructuraEstudiantesCarreraSede()
 
 
 ventana.mainloop()
-
 
 
