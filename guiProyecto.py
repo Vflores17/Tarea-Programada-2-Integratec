@@ -4,22 +4,49 @@ from tkinter import messagebox
 import random
 
 ventana = Tk()
-totalAdmitidos={"CTLSC":0,"CTLSJ":0,"CAL":0,"CTCC":0,"CAA":0}
-#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
+totalAdmitidos={"CTLSC":25,"CTLSJ":25,"CAL":25,"CTCC":25,"CAA":25}
+estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
+#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
 
-def distribuirAdmitidos(totalAdmitidos, estructuraCarrerasCantidad):
-    for sede, carreras in estructuraCarrerasCantidad.items():
-        total_cupos = totalAdmitidos[sede]
+totalCarnets={}
+codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
+totalCarnets = []
+totalNumeros = []
+totalCorreos = []
+diccEstudiantes = {}
+diccMentores={}
 
-        for carrera in carreras[:-1]:
-            cupos = total_cupos // random.randint(4, 9)
-            carrera[1] = cupos
-            total_cupos -= cupos
 
-        carrera = carreras[-1]
-        carrera[1] = total_cupos
+def crearMentores():
+    
+    def cerrarVentanaMentores():
+        ventanaMentores.destroy()
+        ventana.deiconify()
 
-    return estructuraCarrerasCantidad
+    ventana.withdraw
+    ventanaMentores = tk.Toplevel(ventana)
+    ventanaMentores.title("Pestaña de los mentores")
+    ventanaMentores.geometry("825x525")
+    ventanaMentores.config(bg="lightblue")
+
+    #Texto en la ventana
+    label = tk.Label(ventanaMentores, text="Pestaña de los mentores")
+    label.config(fg="green", bg="lightgrey", font=("Verdana", 12))
+    label.place(x=25, y=10)
+
+    #Botones
+    botonVolver = tk.Button(ventanaMentores, text="Volver",font=("Verdana", 10),bg="red",command=cerrarVentanaMentores,fg="white")
+    botonVolver.place(x=750, y=485)
+
+
+def estudiantesCarreraPorSede(totalCarnets):
+    messagebox.showinfo("Información","Se han insertado satisfactoriamente la información de cada estudiantes admitido")
+    diccEstudiantes={}
+    totalCarnets = []
+    totalNumeros = []
+    totalCorreos = []
+    diccEstudiantes=generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccEstudiantes)
+    return diccEstudiantes
 
 
 def crearEstructuraEstudiantesCarreraSede():
@@ -35,6 +62,20 @@ def crearEstructuraEstudiantesCarreraSede():
 
 def estudiantesPorSede():
     
+    def distribuirAdmitidos(totalAdmitidos, estructuraCarrerasCantidad):
+        for sede, carreras in estructuraCarrerasCantidad.items():
+            total_cupos = totalAdmitidos[sede]
+
+            for carrera in carreras[:-1]:
+                cupos = total_cupos // random.randint(4, 9)
+                carrera[1] = cupos
+                total_cupos -= cupos
+
+            carrera = carreras[-1]
+            carrera[1] = total_cupos
+
+        return estructuraCarrerasCantidad
+
     def actualizarMatriz():
         for i in range(1, 6):
             for j in range(1, 3):
@@ -144,13 +185,6 @@ def estudiantesPorSede():
     mostrarMatrizVacia()
     
 
-    
-    
-    
-
-
-
-
 def habilitarOpciones():
     boton2.config(state=tk.NORMAL)
     boton3.config(state=tk.NORMAL)
@@ -173,8 +207,8 @@ label.place(x=25, y=10)
 
 #Creacion botones
 boton1 = tk.Button(ventana, text="Estudiantes por sede",font=("Verdana", 10),command=estudiantesPorSede)
-boton2 = tk.Button(ventana, text="Estudiantes de carrera por sede",font=("Verdana", 10),state="disabled")
-boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="disabled")
+boton2 = tk.Button(ventana, text="Estudiantes de carrera por sede",font=("Verdana", 10),state="disabled",command=lambda:estudiantesCarreraPorSede(totalCarnets))
+boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="disabled",command=crearMentores)
 boton4 = tk.Button(ventana, text="Asignar mentores",font=("Verdana", 10),state="disabled")
 boton5 = tk.Button(ventana, text="Actualizar estudiante",font=("Verdana", 10),state="disabled")
 boton6 = tk.Button(ventana, text="Generar reportes",font=("Verdana", 10),state="disabled")
@@ -195,7 +229,7 @@ boton8.place(x=335, y=185)
 boton9.place(x=475, y=260)
 
 #Creación de la estructura de datos
-estructuraCarrerasCantidad=crearEstructuraEstudiantesCarreraSede()
+#estructuraCarrerasCantidad=crearEstructuraEstudiantesCarreraSede()
 
 
 ventana.mainloop()
