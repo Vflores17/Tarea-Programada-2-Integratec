@@ -4,7 +4,7 @@ from tkinter import messagebox
 import random
 
 ventana = Tk()
-totalAdmitidos={"CTLSC":25,"CTLSJ":25,"CAL":25,"CTCC":25,"CAA":25}
+totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
 estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
 #estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
 
@@ -17,17 +17,38 @@ diccEstudiantes = {}
 diccMentores={}
 
 
-def crearMentores():
+def crearMentores(diccMentores):
+    
+    def mostrarInfo():
+        for i in range(1, 6):
+            for j in range(1, 2):
+                matrizLabel[i][j].destroy()
+                
+        sedes = diccMentores.keys()
+        
+        for i, sede in enumerate(sedes, start=1):
+            for j in range(1, 2):
+                contenido = "\n".join([f"{sede[0]}: {sede[1:]}" for sede in diccMentores.get(sede, [])])
+                print(contenido)
+
+                text = tk.Text(ventanaMentores, width=130 if j == 1 else 10, height=4, relief="solid")
+                text.grid(column=j, row=i)
+                text.place(x=51 + (j * 75), y=46 + (i * 70))
+                text.insert("1.0", contenido)
+                text.tag_configure("center", justify="center")
+                text.tag_add("center", "1.0", "end")
+                text.config(state="disabled")
+                matrizLabel[i][j] = text
     
     def cerrarVentanaMentores():
         ventanaMentores.destroy()
         ventana.deiconify()
 
-    ventana.withdraw
     ventanaMentores = tk.Toplevel(ventana)
     ventanaMentores.title("Pestaña de los mentores")
-    ventanaMentores.geometry("825x525")
+    ventanaMentores.geometry("1185x525")
     ventanaMentores.config(bg="lightblue")
+    ventana.withdraw()
 
     #Texto en la ventana
     label = tk.Label(ventanaMentores, text="Pestaña de los mentores")
@@ -36,16 +57,39 @@ def crearMentores():
 
     #Botones
     botonVolver = tk.Button(ventanaMentores, text="Volver",font=("Verdana", 10),bg="red",command=cerrarVentanaMentores,fg="white")
-    botonVolver.place(x=750, y=485)
+    botonVolver.place(x=1110, y=485)
+
+    matrizLabel = [[None for _ in range(2)] for _ in range(6)]
+
+    diccMentores={}
+    diccMentores=generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccMentores)
+
+    diccionarioVacio={(0,0):"Sede", (0,1):"Información de mentores", (1,0):"CTLSC", (2,0):"CTLSJ", (3,0):"CAL", (4,0):"CTCC", (5,0):"CAA"}
+    
+    for i in range(6):       
+        for j in range(2):
+            info=diccionarioVacio.get((i,j),"")
+            label = tk.Label(ventanaMentores,width=148 if j == 1 else 10,height=4,relief="solid",anchor=CENTER)
+            label.grid(column=j, row=i)
+            label.place(x=50+(j*75), y=45+(i*69))
+            matrizLabel[i][j]=label
+            matrizLabel[i][j].config(text=info)
+
+    mostrarInfo()
+
+    #botonActualizar = tk.Button(ventanaMentores,text="Actualizar matriz",font=("Verdana",10),command = mostrarInfo,bg="green",fg="white")
+    #botonActualizar.place(x=625,y=485)
+    
+    
+    
+      
+    
 
 
-def estudiantesCarreraPorSede(totalCarnets):
-    messagebox.showinfo("Información","Se han insertado satisfactoriamente la información de cada estudiantes admitido")
+def estudiantesCarreraPorSede(totalCarnets,diccEstudiantes):
     diccEstudiantes={}
-    totalCarnets = []
-    totalNumeros = []
-    totalCorreos = []
     diccEstudiantes=generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccEstudiantes)
+    messagebox.showinfo("Información","Se han insertado satisfactoriamente la información de cada estudiantes admitido")
     return diccEstudiantes
 
 
@@ -207,8 +251,8 @@ label.place(x=25, y=10)
 
 #Creacion botones
 boton1 = tk.Button(ventana, text="Estudiantes por sede",font=("Verdana", 10),command=estudiantesPorSede)
-boton2 = tk.Button(ventana, text="Estudiantes de carrera por sede",font=("Verdana", 10),state="disabled",command=lambda:estudiantesCarreraPorSede(totalCarnets))
-boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="disabled",command=crearMentores)
+boton2 = tk.Button(ventana, text="Estudiantes de carrera por sede",font=("Verdana", 10),state="disabled",command=lambda:estudiantesCarreraPorSede(totalCarnets,diccEstudiantes))
+boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="disabled",command=lambda:crearMentores(diccMentores))
 boton4 = tk.Button(ventana, text="Asignar mentores",font=("Verdana", 10),state="disabled")
 boton5 = tk.Button(ventana, text="Actualizar estudiante",font=("Verdana", 10),state="disabled")
 boton6 = tk.Button(ventana, text="Generar reportes",font=("Verdana", 10),state="disabled")

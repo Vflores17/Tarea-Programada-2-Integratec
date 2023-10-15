@@ -5,7 +5,7 @@ import random
 from faker import Faker
 
 urlSedes="https://www.tec.ac.cr/carreras"
-#totalAdmitidos={"CTLSC":10,"CTLSJ":10,"CAL":10,"CTCC":34,"CAA":10}
+#totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
 #estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 2], ['Bachillerato en Gestión del Turismo Rural Sostenible', 1], ['Bachillerato en Gestión en Sostenibilidad Turística', 1], ['Bachillerato en Ingeniería en Computación',2 ], ['Licenciatura en Ingeniería Electrónica', 1], ['Licenciatura en Ingeniería en Agronomía', 2], ['Licenciatura en Ingeniería en Producción Industrial', 1]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 4], ['Bachillerato en Ingeniería en Computación', 3], ['Licenciatura en Arquitectura', 3]], 'CAL': [['Bachillerato en Administración de Empresas', 3], ['Bachillerato en Ingeniería en Computación', 4], ['Bachillerato en Producción Industrial,  Limón', 3]], 'CTCC': [['Bachillerato en Administración de Empresas', 1], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 1], ['Bachillerato en Gestión del Turismo Sostenible', 1], ['Bachillerato en Ingeniería en Biotecnología', 1], ['Bachillerato en Ingeniería en Computación', 1], ['Licenciatura en Administración de Tecnología de Información', 1], ['Licenciatura en Ingeniería Agrícola', 2], ['Licenciatura en Ingeniería Ambiental', 1], ['Licenciatura en Ingeniería Electrónica', 1], ['Licenciatura en Ingeniería en Agronegocios', 2], ['Licenciatura en Ingeniería en Computadores', 2], ['Licenciatura en Ingeniería en Construcción', 2], ['Licenciatura en Ingeniería en Diseño Industrial', 2], ['Licenciatura en Ingeniería en Materiales', 2], ['Licenciatura en Ingeniería en Producción Industrial', 2], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 2], ['Licenciatura en Ingeniería Física', 2], ['Licenciatura en Ingeniería Forestal', 2], ['Licenciatura en Ingeniería Mecatrónica', 2], ['Licenciatura en Mantenimiento Industrial', 4]], 'CAA': [['Bachillerato en Ingeniería en Computación', 5], ['Licenciatura en Ingeniería Electrónica', 5]]}
 estructura={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
 codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
@@ -13,8 +13,10 @@ codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": 
 
 def generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccMentores):
     for sede in estructuraCarrerasCantidad.keys():
+        listaMentores=[]
         for i,carrera in enumerate(estructuraCarrerasCantidad[sede]):
                 cantidadMentores = round(estructuraCarrerasCantidad[sede][i][1]*0.05)
+                
 
                 for j in range(cantidadMentores):
                     nuevoCarnet = None
@@ -30,13 +32,11 @@ def generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,
                         correo = generarDatos(3,nombreCompleto[0][1:],nombreCompleto[1])
                     totalCorreos.append(correo)
 
-
-                    diccMentores[nuevoCarnet] = [nombreCompleto, carrera[0], correo]
+                    listaMentores.append([nuevoCarnet,nombreCompleto, carrera[0], correo])
+                    
+        diccMentores[sede] = listaMentores
                     
     return diccMentores
-
-        
-
 
 
 def obtenerSedesCarreras():
@@ -76,7 +76,9 @@ def generarDatos(opcion,pnombre,papellido1):
     elif opcion == 2:
         return random.randint(60000000, 99999999)
     elif opcion == 3:
-        return pnombre[:2]+papellido1+"@estudiantec.cr"
+        num=random.randint(1,9)
+        return pnombre[:3]+papellido1+str(num)+"@estudiantec.cr"
+        
     
 
 
@@ -84,20 +86,22 @@ def generarDatos(opcion,pnombre,papellido1):
 def generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccEstudiantes):
     
     for sede in totalAdmitidos.keys():
+        print("generando carnets de estudiantes")
         for i,carrera in enumerate(estructuraCarrerasCantidad[sede]):
+            
             cantidad_admitidos = estructuraCarrerasCantidad[sede][i][1]
 
             for _ in range(cantidad_admitidos):
                 nuevoCarnet = None
-
+                
                 while nuevoCarnet is None or nuevoCarnet in totalCarnets:
                     nuevoCarnet = generarNumCarnet(1,codigosSedes[sede])
 
                 totalCarnets.append(nuevoCarnet)
 
                 nombreCompleto , telefono , correo = generarDatos(1,"","")
-
-                if telefono in totalNumeros:
+                
+                while telefono in totalNumeros:
                     telefono = generarDatos(2,"","")
                 totalNumeros.append(telefono)
 
@@ -116,6 +120,8 @@ def imprimir_diccionario(diccionario):
 
 #info={"ctaa":[["Ingeniería en Computadores",0],["Ingeniería en Computación",5100],["Ingeniería en Computación con Énfasis en Sistemas de Información Empresarial,",0]],}
 #print(info["ctaa"][1][1])
-#estructura=generarCarnets(totalAdmitidos,estructuraCarrerasCantidad)
+#estructura=generarCarnetsEstudiantes(totalAdmitidos, estructura,codigosSedes,[],[],[],{})
 #imprimir_diccionario(estructura)
 #print(generarCarnetsMentores(estructura,codigosSedes,[],[],[],{}))
+#estructura=generarCarnetsMentores(estructura,codigosSedes,[],[],[],{})
+#imprimir_diccionario(estructura)
