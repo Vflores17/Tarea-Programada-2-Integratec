@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import random
 from faker import Faker
+import re
 
 urlSedes="https://www.tec.ac.cr/carreras"
 totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
@@ -887,6 +888,46 @@ diccEstudiantes={
 }
 diccMentores={'CTLSC': [['2023027180', ('Stacie', 'Taylor', 'Powell'), 'Bachillerato en Administración de Empresas', 'StTaylor@estudiantec.cr'], ['2023022268', ('Leslie', 'Robbins', 'Garcia'), 'Bachillerato en Gestión del Turismo Rural Sostenible', 'LeRobbins@estudiantec.cr'], ['2023023620', ('Ariel', 'Trujillo', 'Davis'), 'Bachillerato en Gestión en Sostenibilidad Turística', 'ArTrujillo@estudiantec.cr'], ['2023021783', ('Dennis', 'Tanner', 'Hensley'), 'Bachillerato en Ingeniería en Computación', 'DeTanner@estudiantec.cr'], ['2023028595', ('Christopher', 'Williams', 'Fleming'), 'Licenciatura en Ingeniería Electrónica', 'ChWilliams@estudiantec.cr'], ['2023022060', ('Lisa', 'Vang', 'Castaneda'), 'Licenciatura en Ingeniería en Agronomía', 'LiVang@estudiantec.cr'], ['2023023729', ('Vanessa', 'Williamson', 'Smith'), 'Licenciatura en Ingeniería en Producción Industrial', 'VaWilliamson@estudiantec.cr']], 'CTLSJ': [['2023033049', ('Jonathan', 'Lopez', 'Dickerson'), 'Bachillerato en Administración de Empresas', 'JoLopez@estudiantec.cr'], ['2023035141', ('Paula', 'Watts', 'Clark'), 'Bachillerato en Ingeniería en Computación', 'PaWatts@estudiantec.cr'], ['2023035984', ('Robert', 'Giles', 'Marshall'), 'Licenciatura en Arquitectura', 'RoGiles@estudiantec.cr']], 'CAL': [['2023057426', ('Julia', 'Gonzalez', 'Sanders'), 'Bachillerato en Administración de Empresas', 'JuGonzalez@estudiantec.cr'], ['2023057653', ('Marcus', 'Tanner', 'Kim'), 'Bachillerato en Ingeniería en Computación', 'MaTanner@estudiantec.cr'], ['2023056386', ('Tina', 'Collins', 'Rhodes'), 'Bachillerato en Producción Industrial,  Limón', 'TiCollins@estudiantec.cr']], 'CTCC': [['2023016134', ('Joel', 'Higgins', 'Duarte'), 'Bachillerato en Administración de Empresas', 'JoHiggins@estudiantec.cr'], ['2023018883', ('Frederick', 'Ray', 'Torres'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'FrRay@estudiantec.cr'], ['2023013656', ('Cristina', 'Stevens', 'Lowery'), 'Bachillerato en Gestión del Turismo Sostenible', 'CrStevens@estudiantec.cr'], ['2023016929', ('Zachary', 'Cardenas', 'Ramirez'), 'Bachillerato en Ingeniería en Biotecnología', 'ZaCardenas@estudiantec.cr'], ['2023017535', ('Michelle', 'Wall', 'Ortiz'), 'Bachillerato en Ingeniería en Computación', 'MiWall@estudiantec.cr'], ['2023013096', ('Douglas', 'Jackson', 'Escobar'), 'Licenciatura en Administración de Tecnología de Información', 'DoJackson@estudiantec.cr'], ['2023013492', ('James', 'Rogers', 'Nichols'), 'Licenciatura en Ingeniería Agrícola', 'JaRogers@estudiantec.cr'], ['2023017427', ('Carol', 'Bates', 'Clark'), 'Licenciatura en Ingeniería Ambiental', 'CaBates@estudiantec.cr'], ['2023018784', ('Victor', 'Chambers', 'Gill'), 'Licenciatura en Ingeniería Electrónica', 'ViChambers@estudiantec.cr'], ['2023018140', ('Christopher', 'Marshall', 'Gates'), 'Licenciatura en Ingeniería en Agronegocios', 'ChMarshall@estudiantec.cr'], ['2023011145', ('Austin', 'Boyd', 'Cox'), 'Licenciatura en Ingeniería en Computadores', 'AuBoyd@estudiantec.cr'], ['2023015984', ('David', 'Martinez', 'Gonzales'), 'Licenciatura en Ingeniería en Construcción', 'DaMartinez@estudiantec.cr'], ['2023011617', ('Adam', 'Alvarez', 'Ross'), 'Licenciatura en Ingeniería en Diseño Industrial', 'AdAlvarez@estudiantec.cr'], ['2023016435', ('James', 'Sanders', 'King'), 'Licenciatura en Ingeniería en Materiales', 'JaSanders@estudiantec.cr'], ['2023015299', ('Phillip', 'Love', 'Thomas'), 'Licenciatura en Ingeniería en Producción Industrial', 'PhLove@estudiantec.cr'], ['2023012068', ('Jerry', 'Rodriguez', 'Leblanc'), 'Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 'JeRodriguez@estudiantec.cr'], ['2023016166', ('Patrick', 'Waller', 'Church'), 'Licenciatura en Ingeniería Física', 'PaWaller@estudiantec.cr'], ['2023016506', ('Elijah', 'Giles', 'Klein'), 'Licenciatura en Ingeniería Forestal', 'ElGiles@estudiantec.cr'], ['2023018453', ('Anna', 'Pruitt', 'Mccullough'), 'Licenciatura en Ingeniería Mecatrónica', 'AnPruitt@estudiantec.cr'], ['2023015802', ('Shannon', 'Cain', 'Houston'), 'Licenciatura en Mantenimiento Industrial', 'ShCain@estudiantec.cr']], 'CAA': [['2023041882', ('Samuel', 'Estrada', 'Reyes'), 'Bachillerato en Ingeniería en Computación', 'SaEstrada@estudiantec.cr'], ['2023049765', ('James', 'Johnson', 'Jones'), 'Licenciatura en Ingeniería Electrónica', 'JaJohnson@estudiantec.cr']]}
 codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
+formato=r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$"
+inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
+def extraerInformacion(diccEstudiantes,lista):
+    info=[]
+    for estudiante in diccEstudiantes.keys():
+        for i in lista:
+            if estudiante==i:
+                info.append(diccEstudiantes[estudiante])
+                continue
+    return info
+
+def generarReporteSede(estructura, diccEstudiantes, inicialesSedes):
+    with open("Reporte por sede.html", "w", encoding="utf-8") as reporte:
+        reporte.write('''<html>
+                           <head>
+                               <title>Reporte por sede</title>
+                           </head>
+                           <body>
+                               <h1>Reporte por sede.</h1>''')
+        for sede in estructura.keys():
+            sede_nombre = obtener_clave_por_valor(inicialesSedes, sede)
+            reporte.write(f'''<h2>{sede_nombre}</h2>
+                            <table border='1'>
+                                   <tr bgcolor="0C9208">
+                                       <th style="color: white;">Carrera</th>
+                                       <th style="color: white;">Información de estudiantes</th>
+                                   </tr>\n''')
+            for pos, carrera in enumerate(estructura[sede]):
+                estudiantes = extraerInformacion(diccEstudiantes,extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera[0]))
+                reporte.write(f'''<tr  style="background-color: #D7BCE9;">
+                                    <td align="center">{carrera[0]}</td>
+                                    <td align="center">{estudiantes}</td>
+                                </tr>\n''')
+            reporte.write('''</table>\n''')
+        reporte.write('''</body>
+                            </html>''')
+
+    print("Reporte por sede generado con éxito.")
+
+
 
 
 def extraerMentoresSedeCarrera(diccMentores, sede, carrera):
@@ -905,9 +946,6 @@ def extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera):
         if sedeEstudiante == sede and carreraEstudiante == carrera:
             estudiantesCarreraSede.append(estudiante)
     return estudiantesCarreraSede
-
-
-
 
 def asignarMentores(diccEstudiantes, diccMentores, estructura):
     for sede in estructura.keys():
@@ -934,8 +972,6 @@ def asignarMentores(diccEstudiantes, diccMentores, estructura):
                     i += 1
 
     return diccEstudiantes
-
-
 
 def generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccMentores):
     for sede in estructuraCarrerasCantidad.keys():
@@ -964,10 +1000,8 @@ def generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,
                     
     return diccMentores
 
-
-def obtenerSedesCarreras():
+def obtenerSedesCarreras(inicialesSedes):
     carrerasSede = {}
-    inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
     resp = requests.get(urlSedes)
     if resp.status_code == 200:
         soup = BeautifulSoup(resp.text, "html.parser")
@@ -1005,10 +1039,6 @@ def generarDatos(opcion,pnombre,papellido1):
         num=random.randint(1,9)
         return pnombre[:3]+papellido1+str(num)+"@estudiantec.cr"
         
-    
-
-
-
 def generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccEstudiantes):
     
     for sede in totalAdmitidos.keys():
@@ -1040,11 +1070,24 @@ def generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigos
 
     return diccEstudiantes
 
+def validarCorreo(correo):
+    if re.match(formato,correo):
+        return True
+    else:
+        return False
+
 def imprimir_diccionario(diccionario):
     print("{")
     for clave, valor in diccionario.items():
         print("'",clave,"'" ":", valor,",")
     print("}")        
+
+def obtener_clave_por_valor(diccionario, valor_buscado):
+    for clave, valor in diccionario.items():
+        if valor == valor_buscado:
+            return clave
+    # Si no se encuentra el valor, puedes devolver None u otro valor predeterminado.
+    return None
 
 #info={"ctaa":[["Ingeniería en Computadores",0],["Ingeniería en Computación",5100],["Ingeniería en Computación con Énfasis en Sistemas de Información Empresarial,",0]],}
 #print(info["ctaa"][1][1])
@@ -1056,3 +1099,5 @@ def imprimir_diccionario(diccionario):
 #diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructura)
 #imprimir_diccionario(diccEstudiantes)
 #imprimir_diccionario(diccMentores)
+
+generarReporteSede(estructura,diccEstudiantes,inicialesSedes)
