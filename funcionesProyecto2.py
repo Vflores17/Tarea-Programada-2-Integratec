@@ -1,16 +1,16 @@
-import tkinter as tk
 import requests
 from bs4 import BeautifulSoup
 import random
 from faker import Faker
 import re
+import datetime
+import csv
 
 urlSedes="https://www.tec.ac.cr/carreras"
 totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
-#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 2], ['Bachillerato en Gestión del Turismo Rural Sostenible', 1], ['Bachillerato en Gestión en Sostenibilidad Turística', 1], ['Bachillerato en Ingeniería en Computación',2 ], ['Licenciatura en Ingeniería Electrónica', 1], ['Licenciatura en Ingeniería en Agronomía', 2], ['Licenciatura en Ingeniería en Producción Industrial', 1]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 4], ['Bachillerato en Ingeniería en Computación', 3], ['Licenciatura en Arquitectura', 3]], 'CAL': [['Bachillerato en Administración de Empresas', 3], ['Bachillerato en Ingeniería en Computación', 4], ['Bachillerato en Producción Industrial,  Limón', 3]], 'CTCC': [['Bachillerato en Administración de Empresas', 1], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 1], ['Bachillerato en Gestión del Turismo Sostenible', 1], ['Bachillerato en Ingeniería en Biotecnología', 1], ['Bachillerato en Ingeniería en Computación', 1], ['Licenciatura en Administración de Tecnología de Información', 1], ['Licenciatura en Ingeniería Agrícola', 2], ['Licenciatura en Ingeniería Ambiental', 1], ['Licenciatura en Ingeniería Electrónica', 1], ['Licenciatura en Ingeniería en Agronegocios', 2], ['Licenciatura en Ingeniería en Computadores', 2], ['Licenciatura en Ingeniería en Construcción', 2], ['Licenciatura en Ingeniería en Diseño Industrial', 2], ['Licenciatura en Ingeniería en Materiales', 2], ['Licenciatura en Ingeniería en Producción Industrial', 2], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 2], ['Licenciatura en Ingeniería Física', 2], ['Licenciatura en Ingeniería Forestal', 2], ['Licenciatura en Ingeniería Mecatrónica', 2], ['Licenciatura en Mantenimiento Industrial', 4]], 'CAA': [['Bachillerato en Ingeniería en Computación', 5], ['Licenciatura en Ingeniería Electrónica', 5]]}
 estructura={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
-diccEstudiantes={
-' 2024025746 ': [('Heather', 'Harris', 'Carroll'), 64143356, 'HeHarris@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0] ,
+diccEstudiantes={' 2024025746 ': [('Heather', 'Harris', 'Carroll'), 64143356, 'HeHarris@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0] ,
+
 ' 2024023376 ': [('Joseph', 'Gibbs', 'Davis'), 80543506, 'JoGibbs@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0] ,
 ' 2024029231 ': [('Carl', 'Wolfe', 'Nelson'), 97530014, 'CaWolfe@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0] ,
 ' 2024029621 ': [('Robert', 'Simpson', 'Singleton'), 78175530, 'RoSimpson@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0] ,
@@ -890,7 +890,127 @@ diccMentores={'CTLSC': [['2023027180', ('Stacie', 'Taylor', 'Powell'), 'Bachille
 codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
 formato=r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$"
 inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
-def extraerInformacion(diccEstudiantes,lista):
+
+def generarArchivo(estudiantes,mentores,nombre):
+    encabezadosEstudiantes = ["Sede", "Carrera", "Carnet", "Nombre", "Correo", "Teléfono", "Estudiante"]
+    encabezadosMentores = ["Sede", "Carrera", "Carnet", "Nombre", "Correo", "Mentor"]
+    with open(f"{nombre}.csv", mode='w', newline='') as archivo_csv:
+        writer = csv.writer(archivo_csv)
+        writer.writerow(encabezadosEstudiantes) 
+        for estudiante in estudiantes:
+            writer.writerow(estudiante)
+
+        writer.writerow(encabezadosMentores)
+
+        for mentor in mentores:
+            writer.writerow(mentor)  
+
+def crearBaseDatos(diccEstudiantes,diccMentores):
+    
+    fecha=datetime.datetime.now().strftime("%d-%m-%Y_%H-%M")
+    infoEstudiantes=[]
+    infoMentores=[]
+    nombre="bdIntegraTEC"+fecha
+    for estudiante in diccEstudiantes.keys():
+        info=[]
+        info=[diccEstudiantes[estudiante][3],diccEstudiantes[estudiante][4],estudiante,diccEstudiantes[estudiante][0],diccEstudiantes[estudiante][2],diccEstudiantes[estudiante][1],True]
+        infoEstudiantes.append(info)
+    for sede in diccMentores.keys():
+        for mentor in diccMentores[sede]:
+            info=[]
+            info=[sede,mentor[2],mentor[0],mentor[1],mentor[3],False]
+            infoMentores.append(info)
+    print(nombre)
+    generarArchivo(infoEstudiantes,infoMentores,nombre)
+
+    print("Base de datos creada con éxito.")
+        
+
+def obtenerCarreras(estructura):
+    carreras=[]
+    for sede in estructura.keys():
+        for carrera in estructura[sede]:
+            if carrera[0] not in carreras:
+                carreras.append(carrera[0])
+    return carreras
+
+def generarReporteMentor(diccMentores, diccEstudiantes):
+    with open("Reporte por mentor.html", "w", encoding="utf-8") as reporte:
+        reporte.write('''<html>
+                           <head>
+                               <title>Reporte por mentor</title>
+                           </head>
+                           <body>
+                               <h1>Reporte por mentor.</h1>''')
+
+        for sede, mentores in diccMentores.items():
+            reporte.write(f'<h2>Sede: {sede}</h2>')
+
+            for mentor in mentores:
+                mentor_nombre = mentor[1][0]
+                mentor_carnet = mentor[0]
+                reporte.write(f'<h3>Mentor: {mentor_nombre}</h3>')
+
+                estudiantes_asignados = []
+                contador = 1  
+
+                for carnet, estudiante_info in diccEstudiantes.items():
+                    if estudiante_info[-1] == mentor_carnet:
+                        estudiantes_asignados.append((carnet, estudiante_info[0]))
+
+                if estudiantes_asignados:
+                    for carnet, nombre_estudiante in estudiantes_asignados:
+                        reporte.write(f'<li>{contador}. {carnet} - {nombre_estudiante}</li>')
+                        contador += 1
+                else:
+                    reporte.write('<p>No hay estudiantes asignados a este mentor.</p>')
+
+        reporte.write('''</body>
+                        </html>''')
+
+    print("Reporte por mentor generado con éxito.")
+
+def extraerInfoCarrera(diccEstudiantes,lista):
+    info=[]
+    for estudiante in diccEstudiantes.keys():
+        for i in lista:
+            if estudiante==i:
+                info.append(diccEstudiantes[estudiante])
+                continue
+    return info
+
+def generarReporteCarrera(estructura, diccEstudiantes, carrera):
+    with open("Reporte por carrera.html", "w", encoding="utf-8") as reporte:
+        reporte.write('''<html>
+                           <head>
+                               <title>Reporte por carrera</title>
+                           </head>
+                           <body>
+                               <h1>Reporte por carrera.</h1>
+                               <h2>{}</h2>
+                               <table border='1'>
+                                   <tr bgcolor="0C9208">
+                                       <th style="color: white;">Información de estudiantes</th>
+                                   </tr>\n'''.format(carrera))
+
+        i = 1
+
+        for sede in estructura.keys():
+            info = extraerInfoCarrera(diccEstudiantes, extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera))
+            for infoCompleta in info:
+                infoEstudiante = " - ".join(map(str, infoCompleta))
+                reporte.write(f'''<tr  style="background-color: #D7BCE9;">
+                                    <td align="center">{i}. {infoEstudiante}</td>
+                                </tr>\n''')
+                i += 1  
+            
+        reporte.write('''</table>
+                        </body>
+                        </html>''')
+
+    print("Reporte por carrera generado con éxito.")
+
+def extraerInformacionSede(diccEstudiantes,lista):
     info=[]
     for estudiante in diccEstudiantes.keys():
         for i in lista:
@@ -916,7 +1036,7 @@ def generarReporteSede(estructura, diccEstudiantes, inicialesSedes):
                                        <th style="color: white;">Información de estudiantes</th>
                                    </tr>\n''')
             for pos, carrera in enumerate(estructura[sede]):
-                estudiantes = extraerInformacion(diccEstudiantes,extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera[0]))
+                estudiantes = extraerInformacionSede(diccEstudiantes,extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera[0]))
                 reporte.write(f'''<tr  style="background-color: #D7BCE9;">
                                     <td align="center">{carrera[0]}</td>
                                     <td align="center">{estudiantes}</td>
@@ -926,9 +1046,6 @@ def generarReporteSede(estructura, diccEstudiantes, inicialesSedes):
                             </html>''')
 
     print("Reporte por sede generado con éxito.")
-
-
-
 
 def extraerMentoresSedeCarrera(diccMentores, sede, carrera):
     mentoresCarrera = []
@@ -942,7 +1059,7 @@ def extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera):
     estudiantesCarreraSede = []
     for estudiante in diccEstudiantes.keys():
         sedeEstudiante = diccEstudiantes[estudiante][3]  
-        carreraEstudiante = diccEstudiantes[estudiante][4]  
+        carreraEstudiante = diccEstudiantes[estudiante][4] 
         if sedeEstudiante == sede and carreraEstudiante == carrera:
             estudiantesCarreraSede.append(estudiante)
     return estudiantesCarreraSede
@@ -1098,6 +1215,13 @@ def obtener_clave_por_valor(diccionario, valor_buscado):
 #imprimir_diccionario(estructura)
 #diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructura)
 #imprimir_diccionario(diccEstudiantes)
-#imprimir_diccionario(diccMentores)
+#imprimir_diccionario(asignarMentores(diccEstudiantes,diccMentores,estructura))
+#generarReporteSede(estructura,diccEstudiantes,inicialesSedes)
+#generarReporteCarrera(estructura,diccEstudiantes,"Bachillerato en Ingeniería en Computación")
+#diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructura)
+#generarReporteMentor(diccMentores,diccEstudiantes,estructura)
 
-generarReporteSede(estructura,diccEstudiantes,inicialesSedes)
+crearBaseDatos(diccEstudiantes,diccMentores)
+#crearBaseDatosTxt(diccEstudiantes, diccMentores)
+
+

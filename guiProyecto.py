@@ -2,11 +2,13 @@ from tkinter import *
 from funcionesProyecto2 import *
 from tkinter import messagebox
 import random
+import tkinter as tk
+from tkinter import simpledialog
 
 ventana = Tk()
 totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
-estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
-#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
+#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
+estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
 
 totalCarnets={}
 codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
@@ -17,31 +19,63 @@ diccEstudiantes = {'2024022970': [('Jennifer', 'Williams', 'Sanford'), 67487497,
 diccMentores={'CTLSC': [['2023025459', ('Lori', 'Bennett', 'Thompson'), 'Bachillerato en Administración de Empresas', 'LoBennett@estudiantec.cr'], ['2023022410', ('Elizabeth', 'Johnson', 'Mahoney'), 'Bachillerato en Gestión del Turismo Rural Sostenible', 'ElJohnson@estudiantec.cr'], ['2023028425', ('Kyle', 'Smith', 'Donaldson'), 'Bachillerato en Gestión en Sostenibilidad Turística', 'KySmith@estudiantec.cr'], ['2023023592', ('Matthew', 'Gill', 'Thompson'), 'Bachillerato en Ingeniería en Computación', 'MaGill@estudiantec.cr'], ['2023025136', ('Melissa', 'Stewart', 'Parsons'), 'Licenciatura en Ingeniería Electrónica', 'MeStewart@estudiantec.cr'], ['2023027333', ('Tyler', 'Kim', 'Lang'), 'Licenciatura en Ingeniería en Agronomía', 'TyKim@estudiantec.cr'], ['2023024468', ('Michelle', 'Pearson', 'Franklin'), 'Licenciatura en Ingeniería en Producción Industrial', 'MiPearson@estudiantec.cr'], ['2023023511', ('David', 'Lee', 'Porter'), 'Licenciatura en Ingeniería en Producción Industrial', 'aviLee7@estudiantec.cr'], ['2023028709', ('Mary', 'Long', 'Roberts'), 'Licenciatura en Ingeniería en Producción Industrial', 'MaLong@estudiantec.cr'], ['2023027959', ('Michael', 'Moreno', 'Edwards'), 'Licenciatura en Ingeniería en Producción Industrial', 'MiMoreno@estudiantec.cr']], 'CTLSJ': [['2023039623', ('Allison', 'Boone', 'Bradley'), 'Bachillerato en Administración de Empresas', 'AlBoone@estudiantec.cr'], ['2023036377', ('Valerie', 'Dean', 'Brown'), 'Licenciatura en Arquitectura', 'VaDean@estudiantec.cr'], ['2023031236', ('Ricardo', 'Vance', 'Gomez'), 'Licenciatura en Arquitectura', 'RiVance@estudiantec.cr'], ['2023034999', ('Candace', 'Rios', 'Murray'), 'Licenciatura en Arquitectura', 'CaRios@estudiantec.cr']], 'CAL': [['2023059806', ('Stephen', 'Chen', 'Sanders'), 'Bachillerato en Producción Industrial,  Limón', 'StChen@estudiantec.cr'], ['2023054982', ('William', 'Moreno', 'Hoffman'), 'Bachillerato en Producción Industrial,  Limón', 'WiMoreno@estudiantec.cr'], ['2023054090', ('Rebekah', 'Moore', 'Ruiz'), 'Bachillerato en Producción Industrial,  Limón', 'ebeMoore3@estudiantec.cr']], 'CTCC': [['2023018892', ('Thomas', 'Pierce', 'Barnes'), 'Bachillerato en Administración de Empresas', 'ThPierce@estudiantec.cr'], ['2023016918', ('Aaron', 'Carlson', 'Smith'), 'Bachillerato en Administración de Empresas', 'AaCarlson@estudiantec.cr'], ['2023015182', ('Daniel', 'Craig', 'Thomas'), 'Bachillerato en Administración de Empresas', 'DaCraig@estudiantec.cr'], ['2023018554', ('Hannah', 'Lopez', 'Jones'), 'Bachillerato en Administración de Empresas', 'HaLopez@estudiantec.cr'], ['2023019124', ('Allison', 'Davis', 'Brock'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'AlDavis@estudiantec.cr'], ['2023013943', ('Alisha', 'Flores', 'Hutchinson'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'AlFlores@estudiantec.cr'], ['2023011064', ('Alexis', 'Henderson', 'Perez'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'AlHenderson@estudiantec.cr'], ['2023015340', ('Harold', 'Ramirez', 'Blevins'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'HaRamirez@estudiantec.cr'], ['2023011803', ('Warren', 'Cox', 'Atkinson'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'WaCox@estudiantec.cr'], ['2023015080', ('Robert', 'Lang', 'Watson'), 'Bachillerato en Gestión del Turismo Sostenible', 'RoLang@estudiantec.cr'], ['2023015830', ('William', 'Smith', 'Nguyen'), 'Bachillerato en Gestión del Turismo Sostenible', 'WiSmith@estudiantec.cr'], ['2023016843', ('Paul', 'Rivera', 'Hinton'), 'Bachillerato en Gestión del Turismo Sostenible', 'PaRivera@estudiantec.cr'], ['2023015456', ('Scott', 'Barnes', 'Rodriguez'), 'Bachillerato en Gestión del Turismo Sostenible', 'ScBarnes@estudiantec.cr'], ['2023011208', ('Lisa', 'Tate', 'Montgomery'), 'Bachillerato en Gestión del Turismo Sostenible', 'LiTate@estudiantec.cr'], ['2023018510', ('Molly', 'Baker', 'Barnes'), 'Bachillerato en Ingeniería en Biotecnología', 'MoBaker@estudiantec.cr'], ['2023018637', ('Tyler', 'Knox', 'Davis'), 'Bachillerato en Ingeniería en Biotecnología', 'TyKnox@estudiantec.cr'], ['2023016951', ('Cynthia', 'Green', 'Turner'), 'Bachillerato en Ingeniería en Computación', 'CyGreen@estudiantec.cr'], ['2023018116', ('Daniel', 'Mcbride', 'Franklin'), 'Bachillerato en Ingeniería en Computación', 'DaMcbride@estudiantec.cr'], ['2023018972', ('William', 'Thomas', 'Rosales'), 'Licenciatura en Administración de Tecnología de Información', 'WiThomas@estudiantec.cr'], ['2023011120', ('Peter', 'Murphy', 'Lee'), 'Licenciatura en Administración de Tecnología de Información', 'PeMurphy@estudiantec.cr'], ['2023011204', ('Jenna', 'Conrad', 'Smith'), 'Licenciatura en Ingeniería Agrícola', 'ennConrad6@estudiantec.cr'], ['2023013254', ('Melissa', 'Mullins', 'Weber'), 'Licenciatura en Ingeniería Ambiental', 'MeMullins@estudiantec.cr'], ['2023011461', ('Patrick', 'Butler', 'Floyd'), 'Licenciatura en Ingeniería Electrónica', 'PaButler@estudiantec.cr'], ['2023016241', ('Paul', 'Powell', 'Mcdaniel'), 'Licenciatura en Ingeniería en Agronegocios', 'PaPowell@estudiantec.cr'], ['2023017977', ('Penny', 'Martin', 'Hernandez'), 'Licenciatura en Ingeniería en Computadores', 'PeMartin@estudiantec.cr'], ['2023019405', ('Maria', 'Compton', 'Morris'), 'Licenciatura en Ingeniería en Construcción', 'MaCompton@estudiantec.cr'], ['2023019499', ('Paul', 'Chavez', 'Parker'), 'Licenciatura en Ingeniería en Materiales', 'PaChavez@estudiantec.cr'], ['2023015607', ('Carol', 'Wilson', 'Brown'), 'Licenciatura en Ingeniería en Producción Industrial', 'CaWilson@estudiantec.cr'], ['2023015444', ('Gloria', 'Taylor', 'Smith'), 'Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 'GlTaylor@estudiantec.cr'], ['2023015687', ('Eugene', 'Franco', 'Jones'), 'Licenciatura en Mantenimiento Industrial', 'EuFranco@estudiantec.cr']], 'CAA': [['2023044067', ('Anthony', 'Rivera', 'Patterson'), 'Licenciatura en Ingeniería Electrónica', 'AnRivera@estudiantec.cr'], ['2023048919', ('Jason', 'Norton', 'Lewis'), 'Licenciatura en Ingeniería Electrónica', 'JaNorton@estudiantec.cr']]}
 carnet=""
 inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
-    
+
+def crearBaseDatos():
+    pass
+
 
 def opcionGenerarReportes():
 
     def opcionReporteMentor():
-        pass
+        global diccMentores
+        global diccEstudiantes
+        generarReporteMentor(diccMentores, diccEstudiantes)
+        messagebox.showinfo("Reporte generado", "El reporte se ha generado con éxito.")
 
     def opcionReporteCarrera():
-        pass
+        def generar_reporte(carrera):
+            global diccEstudiantes
+            global estructuraCarrerasCantidad
+            generarReporteCarrera(estructuraCarrerasCantidad, diccEstudiantes, carrera)
+            messagebox.showinfo("Reporte generado", "El reporte se ha generado con éxito.")
+            ventanaCarrera.destroy()
+
+        global estructuraCarrerasCantidad
+        carreras = sorted(obtenerCarreras(estructuraCarrerasCantidad))
+
+      
+        ventanaCarrera = tk.Toplevel(ventana)
+        ventanaCarrera.title("Selección de Carrera")
+        ventanaCarrera.geometry("365x455")
+
+        menu_carreras = tk.Menu(ventanaCarrera)
+
+        for carrera in carreras:
+            
+            menu_carreras.add_command(label=carrera, command=lambda c=carrera: generar_reporte(c))
+
+       
+        ventanaCarrera.config(menu=menu_carreras)
 
     def opcionReporteSede():
-        pass
+        global diccEstudiantes
+        global estructuraCarrerasCantidad
+        global inicialesSedes
+        generarReporteSede(estructuraCarrerasCantidad, diccEstudiantes, inicialesSedes)
+        messagebox.showinfo("Reporte generado", "El reporte se ha generado con éxito.")
 
     def cerrarVentanaReportes():
         ventanaReportes.destroy()
         ventana.deiconify()
 
     ventanaReportes= tk.Toplevel(ventana)
-    ventanaReportes.title("Ventana de actualización de información.")
+    ventanaReportes.title("Ventana para generar reportes.")
     ventanaReportes.geometry("550x300")
     ventanaReportes.config(bg="lightblue")
     ventana.withdraw()
 
     #Texto en la ventana
-    label = tk.Label(ventanaReportes, text="Ventana para actualizar información de los estudiantes.")
+    label = tk.Label(ventanaReportes, text="Aqui puedes generar los reportes.")
     label.config(fg="green", bg="lightgrey", font=("Verdana", 12))
     label.place(x=25, y=10)
 
@@ -57,7 +91,7 @@ def opcionGenerarReportes():
     opciones.add_command(label="Reporte por Mentor",command=opcionReporteMentor)
 
 
-    menu.add_cascade(label="Opciones para actualiar información", menu=opciones)
+    menu.add_cascade(label="Opciones para generar los reportes.", menu=opciones)
     ventanaReportes.config(menu=menu)
 
 def opcionActualizarEstudiante():
@@ -285,8 +319,7 @@ def opcionActualizarEstudiante():
 
 
     menu.add_cascade(label="Opciones para actualiar información", menu=opciones)
-    ventanaActualizarInfo.config(menu=menu)
-    
+    ventanaActualizarInfo.config(menu=menu)    
 
 def opcionAsignarMentores():
     global diccEstudiantes
@@ -526,9 +559,9 @@ boton1 = tk.Button(ventana, text="Estudiantes por sede",font=("Verdana", 10),com
 boton2 = tk.Button(ventana, text="Estudiantes de carrera por sede",font=("Verdana", 10),state="disabled",command=lambda:estudiantesCarreraPorSede(totalCarnets))
 boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="disabled",command=crearMentores)
 boton4 = tk.Button(ventana, text="Asignar mentores",font=("Verdana", 10),state="disabled",command=opcionAsignarMentores)
-boton5 = tk.Button(ventana, text="Actualizar estudiante",font=("Verdana", 10),command=opcionActualizarEstudiante)
-boton6 = tk.Button(ventana, text="Generar reportes",font=("Verdana", 10),state="disabled")
-boton7 = tk.Button(ventana, text="Crear base de datos en Excel",font=("Verdana", 10),state="disabled")
+boton5 = tk.Button(ventana, text="Actualizar estudiante",font=("Verdana", 10),command=opcionActualizarEstudiante,state="disabled")
+boton6 = tk.Button(ventana, text="Generar reportes",font=("Verdana", 10),command=opcionGenerarReportes,state="disabled")
+boton7 = tk.Button(ventana, text="Crear base de datos en Excel",font=("Verdana", 10))
 boton8 = tk.Button(ventana, text="Enviar correo",font=("Verdana", 10),state="disabled")
 boton9 = tk.Button(ventana, text="Salir",font=("Verdana", 10),bg="red",command=ventana.destroy,fg="white")
 
