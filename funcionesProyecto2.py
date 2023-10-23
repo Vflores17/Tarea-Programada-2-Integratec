@@ -5,6 +5,12 @@ from faker import Faker
 import re
 import datetime
 import csv
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+import os
+formato_archivo="bdIntegraTEC"
 
 urlSedes="https://www.tec.ac.cr/carreras"
 totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
@@ -891,6 +897,53 @@ codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": 
 formato=r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$"
 inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
 
+def enviarCorreo(correo):
+     # Configuración de la conexión SMTP
+    servidor_smtp = 'smtp.gmail.com'  # Reemplaza con el servidor SMTP adecuado
+    usuario = 'floresvidal001@gmail.com'  # Reemplaza con tu dirección de correo
+    contraseña = 'dwrdpvkpqbsfvfhx'  # Reemplaza con tu contraseña
+
+    # Crear un objeto MIMEMultipart
+    mensaje = MIMEMultipart()
+    mensaje['From'] = usuario
+    mensaje['To'] = correo
+    mensaje['Subject'] = 'Correo con las bases de datos IntegraTEC.'
+
+    # Agregar texto al mensaje
+    mensaje.attach(MIMEText('Envio de los archivos con las bases de datos del programa integraTEC.'))
+
+    directorio_archivos = os.path.dirname(os.path.abspath(__file__))
+
+    # Listar los archivos en el directorio
+    archivos_adjuntos = []
+    for nombre_archivo in os.listdir(directorio_archivos):
+        if nombre_archivo.startswith(formato_archivo):
+            archivo_completo = os.path.join(directorio_archivos, nombre_archivo)
+            archivos_adjuntos.append(archivo_completo)
+
+    if not archivos_adjuntos:
+        print(f"No se encontraron archivos con el formato '{formato_archivo}' en la carpeta.")
+        return
+    
+    print(archivos_adjuntos)
+    
+    for archivo_adjunto in archivos_adjuntos:
+        with open(archivo_adjunto, 'rb') as adjunto:
+            part = MIMEApplication(adjunto.read())
+            part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(archivo_adjunto))
+            mensaje.attach(part)
+    
+    # Establecer la conexión SMTP
+    servidor = smtplib.SMTP_SSL(servidor_smtp)
+    servidor.login(usuario, contraseña)
+
+    # Enviar el correo
+    servidor.sendmail(usuario, correo, mensaje.as_string())
+
+    # Cerrar la conexión SMTP
+    servidor.quit()
+
+
 def generarArchivo(estudiantes,mentores,nombre):
     encabezadosEstudiantes = ["Sede", "Carrera", "Carnet", "Nombre", "Correo", "Teléfono", "Estudiante"]
     encabezadosMentores = ["Sede", "Carrera", "Carnet", "Nombre", "Correo", "Mentor"]
@@ -925,7 +978,6 @@ def crearBaseDatos(diccEstudiantes,diccMentores):
 
     print("Base de datos creada con éxito.")
         
-
 def obtenerCarreras(estructura):
     carreras=[]
     for sede in estructura.keys():
@@ -1216,12 +1268,13 @@ def obtener_clave_por_valor(diccionario, valor_buscado):
 #diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructura)
 #imprimir_diccionario(diccEstudiantes)
 #imprimir_diccionario(asignarMentores(diccEstudiantes,diccMentores,estructura))
-#generarReporteSede(estructura,diccEstudiantes,inicialesSedes)
 #generarReporteCarrera(estructura,diccEstudiantes,"Bachillerato en Ingeniería en Computación")
 #diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructura)
-#generarReporteMentor(diccMentores,diccEstudiantes,estructura)
+#generarReporteSede(estructura,diccEstudiantes,inicialesSedes)
+#diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructura)
+#generarReporteMentor(diccMentores,diccEstudiantes)
 
-crearBaseDatos(diccEstudiantes,diccMentores)
+#crearBaseDatos(diccEstudiantes,diccMentores)
 #crearBaseDatosTxt(diccEstudiantes, diccMentores)
-
+enviarCorreo("vidalfloresmontero@gmail.com")
 

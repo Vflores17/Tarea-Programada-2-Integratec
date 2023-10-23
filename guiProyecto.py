@@ -20,9 +20,50 @@ diccMentores={'CTLSC': [['2023025459', ('Lori', 'Bennett', 'Thompson'), 'Bachill
 carnet=""
 inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
 
-def crearBaseDatos():
-    pass
+def opcionEnviarCorreo():
 
+    def opcionEnviarCorreo(cajaTexto):   
+        correo=cajaTexto.get()
+        if len(correo)>0 and validarCorreo(correo):
+            enviarCorreo(correo)
+            messagebox.showinfo("Correo enviado", "El correo se ha enviado con éxito.")
+            cajaTexto.delete(0, tk.END)
+        else:
+            messagebox.showinfo("Error", "El correo ingresado no es válido.")
+            cajaTexto.delete(0, tk.END)
+
+    def cerrarVentanaCorreo():
+        ventanaCorreo.destroy()
+        ventana.deiconify()
+
+    ventana.withdraw()
+    ventanaCorreo = tk.Toplevel(ventana)
+    ventanaCorreo.title("Enviar correo")
+    ventanaCorreo.geometry("420x205")
+    ventanaCorreo.config(bg="lightblue")
+
+    #Texto en la ventana
+    label = tk.Label(ventanaCorreo, text="Ventana para enviar bases de datos por correo.")
+    label.config(fg="green", bg="lightgrey", font=("Verdana", 12))
+    label.place(x=15, y=10)
+
+    #Caja de texto
+    cajaTexto = tk.Entry(ventanaCorreo, width=50)
+    cajaTexto.place(x=35, y=80)
+
+
+    #Botones
+    botonVolver = tk.Button(ventanaCorreo, text="Volver",font=("Verdana", 10),bg="red",command=cerrarVentanaCorreo,fg="white")
+    botonVolver.place(x=355, y=165)
+
+    botonEnviar = tk.Button(ventanaCorreo, text="Enviar",font=("Verdana", 10),bg="green",fg="white",command=lambda: opcionEnviarCorreo(cajaTexto))
+    botonEnviar.place(x=155, y=125)
+
+def opcionBaseDatos():
+    global diccEstudiantes
+    global diccMentores
+    crearBaseDatos(diccEstudiantes, diccMentores)
+    messagebox.showinfo("Base de datos creada", "La base de datos se ha creado con éxito.")
 
 def opcionGenerarReportes():
 
@@ -327,7 +368,6 @@ def opcionAsignarMentores():
     diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructuraCarrerasCantidad)
     return diccEstudiantes
 
-
 def crearMentores():
     
     def mostrarInfo():
@@ -389,14 +429,12 @@ def crearMentores():
 
     mostrarInfo()
   
-
 def estudiantesCarreraPorSede(totalCarnets):
     global diccEstudiantes
     diccEstudiantes={}
     diccEstudiantes=generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccEstudiantes)
     messagebox.showinfo("Información","Se han insertado satisfactoriamente la información de cada estudiantes admitido")
     return diccEstudiantes
-
 
 def crearEstructuraEstudiantesCarreraSede():
     info=obtenerSedesCarreras()
@@ -533,7 +571,6 @@ def estudiantesPorSede():
     
     mostrarMatrizVacia()
     
-
 def habilitarOpciones():
     boton2.config(state=tk.NORMAL)
     boton3.config(state=tk.NORMAL)
@@ -561,8 +598,8 @@ boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="di
 boton4 = tk.Button(ventana, text="Asignar mentores",font=("Verdana", 10),state="disabled",command=opcionAsignarMentores)
 boton5 = tk.Button(ventana, text="Actualizar estudiante",font=("Verdana", 10),command=opcionActualizarEstudiante,state="disabled")
 boton6 = tk.Button(ventana, text="Generar reportes",font=("Verdana", 10),command=opcionGenerarReportes,state="disabled")
-boton7 = tk.Button(ventana, text="Crear base de datos en Excel",font=("Verdana", 10))
-boton8 = tk.Button(ventana, text="Enviar correo",font=("Verdana", 10),state="disabled")
+boton7 = tk.Button(ventana, text="Crear base de datos en Excel",font=("Verdana", 10),command=opcionBaseDatos,state="disabled")
+boton8 = tk.Button(ventana, text="Enviar correo",font=("Verdana", 10),command=opcionEnviarCorreo)
 boton9 = tk.Button(ventana, text="Salir",font=("Verdana", 10),bg="red",command=ventana.destroy,fg="white")
 
 
