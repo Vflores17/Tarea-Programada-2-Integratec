@@ -1,34 +1,48 @@
+######################################################
+#  Elaborado por: Vidal Flores                      ##
+#  Fecha de Creación: 10/00/2023 12:10              ##
+#  Fecha de última Modificación: 27/10/2023 20:56   ##
+#  Versión: 3.10.4                                  ##
+######################################################
+
+#importación de librerias
 from tkinter import * 
 from funcionesProyecto2 import *
 from tkinter import messagebox
 import random
 import tkinter as tk
 
+#variables globales
 ventana = Tk()
-#totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
 totalAdmitidos={"CTLSC":0,"CTLSJ":0,"CAL":0,"CTCC":0,"CAA":0}
-#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Gestión del Turismo Rural Sostenible', 0], ['Bachillerato en Gestión en Sostenibilidad Turística', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronomía', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Arquitectura', 0]], 'CAL': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Bachillerato en Producción Industrial,  Limón', 0]], 'CTCC': [['Bachillerato en Administración de Empresas', 0], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 0], ['Bachillerato en Gestión del Turismo Sostenible', 0], ['Bachillerato en Ingeniería en Biotecnología', 0], ['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Administración de Tecnología de Información', 0], ['Licenciatura en Ingeniería Agrícola', 0], ['Licenciatura en Ingeniería Ambiental', 0], ['Licenciatura en Ingeniería Electrónica', 0], ['Licenciatura en Ingeniería en Agronegocios', 0], ['Licenciatura en Ingeniería en Computadores', 0], ['Licenciatura en Ingeniería en Construcción', 0], ['Licenciatura en Ingeniería en Diseño Industrial', 0], ['Licenciatura en Ingeniería en Materiales', 0], ['Licenciatura en Ingeniería en Producción Industrial', 0], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 0], ['Licenciatura en Ingeniería Física', 0], ['Licenciatura en Ingeniería Forestal', 0], ['Licenciatura en Ingeniería Mecatrónica', 0], ['Licenciatura en Mantenimiento Industrial', 0]], 'CAA': [['Bachillerato en Ingeniería en Computación', 0], ['Licenciatura en Ingeniería Electrónica', 0]]}
-#estructuraCarrerasCantidad={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
-
-totalCarnets={}
-codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
-
-#totalCarnets = ["2024022970","2024022672","2023025459","2023022410"]
 totalCarnets=[]
-#totalNumeros = [67487497,70797830,60703107]
+codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
+totalCarnets=[]
 totalNumeros=[]
-#totalCorreos = ["JeWilliams@estudiantec.cr","AlHernandez@estudiantec.cr"]
 totalCorreos=[]
-#diccEstudiantes = {'2024022970': [('Jennifer', 'Williams', 'Sanford'), 67487497, 'JeWilliams@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024022672': [('Alex', 'Hernandez', 'Thomas'), 70797830, 'AlHernandez@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024025981': [('Robert', 'Osborn', 'Perez'), 94183600, 'RoOsborn@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024029917': [('Michael', 'Daniels', 'Wells'), 66454739, 'MiDaniels@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024026809': [('Katrina', 'Young', 'Martinez'), 74895153, 'KaYoung@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024028372': [('Angelica', 'Page', 'Moore'), 78615930, 'AnPage@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024021388': [('Stephen', 'Drake', 'Morrison'), 93166120, 'StDrake@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024029720': [('Linda', 'Kramer', 'Moreno'), 96535276, 'LiKramer@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024026517': [('Janice', 'Parker', 'Ryan'), 72856719, 'JaParker@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024023979': [('Rebecca', 'Moore', 'Lopez'), 88273329, 'ReMoore@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024029839': [('Frances', 'Anderson', 'Barnes'), 97274319, 'FrAnderson@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024025607': [('Brittany', 'Hall', 'Peterson'), 88600707, 'BrHall@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024023569': [('Monica', 'Conner', 'Smith'), 71102211, 'MoConner@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024026703': [('Taylor', 'Rowe', 'Anderson'), 72788361, 'TaRowe@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024023420': [('Ashley', 'Brewer', 'Grimes'), 72665557, 'AsBrewer@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024023986': [('Michael', 'Castillo', 'Ochoa'), 82018631, 'MiCastillo@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024021896': [('Jessica', 'Roth', 'Harris'), 64183920, 'JeRoth@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024024735': [('Nathan', 'Maxwell', 'Johnson'), 69428909, 'NaMaxwell@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024025110': [('Sarah', 'Miller', 'Mcdonald'), 89574356, 'SaMiller@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024021192': [('Shannon', 'Moore', 'Graham'), 86624670, 'ShMoore@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024021431': [('Rebecca', 'Pennington', 'Jones'), 74716128, 'RePennington@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024021700': [('Jason', 'Wade', 'Gonzalez'), 90259856, 'JaWade@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024028698': [('Allison', 'Collier', 'Ferguson'), 84058359, 'AlCollier@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024025335': [('Taylor', 'Johnson', 'Berger'), 89375073, 'TaJohnson@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024025325': [('Cesar', 'Brown', 'Huang'), 85673797, 'CeBrown@estudiantec.cr', 'CTLSC', 'Bachillerato en Administración de Empresas', 0], '2024027224': [('James', 'Drake', 'Randall'), 70917352, 'JaDrake@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024027849': [('Valerie', 'Torres', 'Matthews'), 81716268, 'VaTorres@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024028096': [('Bryan', 'Love', 'Clark'), 90792230, 'BrLove@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024024365': [('Amanda', 'Ray', 'Jimenez'), 79488473, 'AmRay@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024023548': [('Jeremy', 'Smith', 'Dawson'), 65845541, 'JeSmith@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024029128': [('Ray', 'Ford', 'Salinas'), 86379667, 'RaFord@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024027182': [('Darius', 'Welch', 'Berry'), 67153806, 'DaWelch@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024025078': [('Richard', 'Dorsey', 'Green'), 95302980, 'RiDorsey@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024023877': [('Michael', 'Day', 'Nichols'), 80144835, 'MiDay@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024023628': [('Jose', 'Sampson', 'Stewart'), 76166078, 'JoSampson@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024023170': [('Michael', 'Mitchell', 'Green'), 82997414, 'MiMitchell@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024028448': [('Daniel', 'Johnson', 'Wood'), 87039656, 'DaJohnson@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024024461': [('Carla', 'Mann', 'Williams'), 84272963, 'CaMann@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024023984': [('Elizabeth', 'Hale', 'Rhodes'), 79377648, 'ElHale@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024023217': [('Lisa', 'Diaz', 'Lewis'), 72478480, 'LiDiaz@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024027502': [('Lisa', 'Yang', 'Wilson'), 86573648, 'LiYang@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024029960': [('Amber', 'Ramirez', 'Price'), 79447395, 'AmRamirez@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024029414': [('Tasha', 'Smith', 'Mitchell'), 79599852, 'TaSmith@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión del Turismo Rural Sostenible', 0], '2024024681': [('April', 'Potter', 'Cox'), 82676145, 'ApPotter@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024028962': [('Sean', 'Ford', 'Rivers'), 71261956, 'SeFord@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024024725': [('Thomas', 'Jackson', 'Harmon'), 73476936, 'ThJackson@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024024758': [('Stephanie', 'Lopez', 'Washington'), 74038317, 'StLopez@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024022410': [('Jeffrey', 'Conrad', 'Smith'), 95496522, 'JeConrad@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024025861': [('Jason', 'Williams', 'Lewis'), 78065700, 'JaWilliams@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024021241': [('Robert', 'Palmer', 'Ramirez'), 73591196, 'RoPalmer@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024022469': [('Nicholas', 'Brown', 'Anderson'), 92580113, 'NiBrown@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024025892': [('Gabriel', 'Ryan', 'Scott'), 85296757, 'GaRyan@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024023822': [('Amanda', 'Davis', 'Gibson'), 75367800, 'AmDavis@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024024174': [('Charles', 'Gaines', 'Oliver'), 75084089, 'ChGaines@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024027971': [('Anthony', 'Smith', 'Wilson'), 88059492, 'AnSmith@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024025491': [('Julie', 'Carey', 'Cook'), 78385520, 'JuCarey@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024026455': [('Christine', 'Dean', 'Mathews'), 61050288, 'ChDean@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024028964': [('Nicholas', 'Gonzalez', 'White'), 62132903, 'NiGonzalez@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024025914': [('April', 'Hall', 'Harrington'), 94170501, 'ApHall@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024023748': [('Justin', 'White', 'Nunez'), 66672404, 'JuWhite@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024024428': [('Amy', 'Howell', 'Valdez'), 78703040, 'AmHowell@estudiantec.cr', 'CTLSC', 'Bachillerato en Gestión en Sostenibilidad Turística', 0], '2024022504': [('Kevin', 'Townsend', 'Hunter'), 83026861, 'KeTownsend@estudiantec.cr', 'CTLSC', 'Bachillerato en Ingeniería en Computación',0]}
 diccEstudiantes={}
-#diccMentores={'CTLSC': [['2023025459', ('Lori', 'Bennett', 'Thompson'), 'Bachillerato en Administración de Empresas', 'LoBennett@estudiantec.cr'], ['2023022410', ('Elizabeth', 'Johnson', 'Mahoney'), 'Bachillerato en Gestión del Turismo Rural Sostenible', 'ElJohnson@estudiantec.cr'], ['2023028425', ('Kyle', 'Smith', 'Donaldson'), 'Bachillerato en Gestión en Sostenibilidad Turística', 'KySmith@estudiantec.cr'], ['2023023592', ('Matthew', 'Gill', 'Thompson'), 'Bachillerato en Ingeniería en Computación', 'MaGill@estudiantec.cr'], ['2023025136', ('Melissa', 'Stewart', 'Parsons'), 'Licenciatura en Ingeniería Electrónica', 'MeStewart@estudiantec.cr'], ['2023027333', ('Tyler', 'Kim', 'Lang'), 'Licenciatura en Ingeniería en Agronomía', 'TyKim@estudiantec.cr'], ['2023024468', ('Michelle', 'Pearson', 'Franklin'), 'Licenciatura en Ingeniería en Producción Industrial', 'MiPearson@estudiantec.cr'], ['2023023511', ('David', 'Lee', 'Porter'), 'Licenciatura en Ingeniería en Producción Industrial', 'aviLee7@estudiantec.cr'], ['2023028709', ('Mary', 'Long', 'Roberts'), 'Licenciatura en Ingeniería en Producción Industrial', 'MaLong@estudiantec.cr'], ['2023027959', ('Michael', 'Moreno', 'Edwards'), 'Licenciatura en Ingeniería en Producción Industrial', 'MiMoreno@estudiantec.cr']], 'CTLSJ': [['2023039623', ('Allison', 'Boone', 'Bradley'), 'Bachillerato en Administración de Empresas', 'AlBoone@estudiantec.cr'], ['2023036377', ('Valerie', 'Dean', 'Brown'), 'Licenciatura en Arquitectura', 'VaDean@estudiantec.cr'], ['2023031236', ('Ricardo', 'Vance', 'Gomez'), 'Licenciatura en Arquitectura', 'RiVance@estudiantec.cr'], ['2023034999', ('Candace', 'Rios', 'Murray'), 'Licenciatura en Arquitectura', 'CaRios@estudiantec.cr']], 'CAL': [['2023059806', ('Stephen', 'Chen', 'Sanders'), 'Bachillerato en Producción Industrial,  Limón', 'StChen@estudiantec.cr'], ['2023054982', ('William', 'Moreno', 'Hoffman'), 'Bachillerato en Producción Industrial,  Limón', 'WiMoreno@estudiantec.cr'], ['2023054090', ('Rebekah', 'Moore', 'Ruiz'), 'Bachillerato en Producción Industrial,  Limón', 'ebeMoore3@estudiantec.cr']], 'CTCC': [['2023018892', ('Thomas', 'Pierce', 'Barnes'), 'Bachillerato en Administración de Empresas', 'ThPierce@estudiantec.cr'], ['2023016918', ('Aaron', 'Carlson', 'Smith'), 'Bachillerato en Administración de Empresas', 'AaCarlson@estudiantec.cr'], ['2023015182', ('Daniel', 'Craig', 'Thomas'), 'Bachillerato en Administración de Empresas', 'DaCraig@estudiantec.cr'], ['2023018554', ('Hannah', 'Lopez', 'Jones'), 'Bachillerato en Administración de Empresas', 'HaLopez@estudiantec.cr'], ['2023019124', ('Allison', 'Davis', 'Brock'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'AlDavis@estudiantec.cr'], ['2023013943', ('Alisha', 'Flores', 'Hutchinson'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'AlFlores@estudiantec.cr'], ['2023011064', ('Alexis', 'Henderson', 'Perez'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'AlHenderson@estudiantec.cr'], ['2023015340', ('Harold', 'Ramirez', 'Blevins'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'HaRamirez@estudiantec.cr'], ['2023011803', ('Warren', 'Cox', 'Atkinson'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'WaCox@estudiantec.cr'], ['2023015080', ('Robert', 'Lang', 'Watson'), 'Bachillerato en Gestión del Turismo Sostenible', 'RoLang@estudiantec.cr'], ['2023015830', ('William', 'Smith', 'Nguyen'), 'Bachillerato en Gestión del Turismo Sostenible', 'WiSmith@estudiantec.cr'], ['2023016843', ('Paul', 'Rivera', 'Hinton'), 'Bachillerato en Gestión del Turismo Sostenible', 'PaRivera@estudiantec.cr'], ['2023015456', ('Scott', 'Barnes', 'Rodriguez'), 'Bachillerato en Gestión del Turismo Sostenible', 'ScBarnes@estudiantec.cr'], ['2023011208', ('Lisa', 'Tate', 'Montgomery'), 'Bachillerato en Gestión del Turismo Sostenible', 'LiTate@estudiantec.cr'], ['2023018510', ('Molly', 'Baker', 'Barnes'), 'Bachillerato en Ingeniería en Biotecnología', 'MoBaker@estudiantec.cr'], ['2023018637', ('Tyler', 'Knox', 'Davis'), 'Bachillerato en Ingeniería en Biotecnología', 'TyKnox@estudiantec.cr'], ['2023016951', ('Cynthia', 'Green', 'Turner'), 'Bachillerato en Ingeniería en Computación', 'CyGreen@estudiantec.cr'], ['2023018116', ('Daniel', 'Mcbride', 'Franklin'), 'Bachillerato en Ingeniería en Computación', 'DaMcbride@estudiantec.cr'], ['2023018972', ('William', 'Thomas', 'Rosales'), 'Licenciatura en Administración de Tecnología de Información', 'WiThomas@estudiantec.cr'], ['2023011120', ('Peter', 'Murphy', 'Lee'), 'Licenciatura en Administración de Tecnología de Información', 'PeMurphy@estudiantec.cr'], ['2023011204', ('Jenna', 'Conrad', 'Smith'), 'Licenciatura en Ingeniería Agrícola', 'ennConrad6@estudiantec.cr'], ['2023013254', ('Melissa', 'Mullins', 'Weber'), 'Licenciatura en Ingeniería Ambiental', 'MeMullins@estudiantec.cr'], ['2023011461', ('Patrick', 'Butler', 'Floyd'), 'Licenciatura en Ingeniería Electrónica', 'PaButler@estudiantec.cr'], ['2023016241', ('Paul', 'Powell', 'Mcdaniel'), 'Licenciatura en Ingeniería en Agronegocios', 'PaPowell@estudiantec.cr'], ['2023017977', ('Penny', 'Martin', 'Hernandez'), 'Licenciatura en Ingeniería en Computadores', 'PeMartin@estudiantec.cr'], ['2023019405', ('Maria', 'Compton', 'Morris'), 'Licenciatura en Ingeniería en Construcción', 'MaCompton@estudiantec.cr'], ['2023019499', ('Paul', 'Chavez', 'Parker'), 'Licenciatura en Ingeniería en Materiales', 'PaChavez@estudiantec.cr'], ['2023015607', ('Carol', 'Wilson', 'Brown'), 'Licenciatura en Ingeniería en Producción Industrial', 'CaWilson@estudiantec.cr'], ['2023015444', ('Gloria', 'Taylor', 'Smith'), 'Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 'GlTaylor@estudiantec.cr'], ['2023015687', ('Eugene', 'Franco', 'Jones'), 'Licenciatura en Mantenimiento Industrial', 'EuFranco@estudiantec.cr']], 'CAA': [['2023044067', ('Anthony', 'Rivera', 'Patterson'), 'Licenciatura en Ingeniería Electrónica', 'AnRivera@estudiantec.cr'], ['2023048919', ('Jason', 'Norton', 'Lewis'), 'Licenciatura en Ingeniería Electrónica', 'JaNorton@estudiantec.cr']]}
 diccMentores={}
 carnet=""
 inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
+sedeMentor=""
+
+#Definición de funciones
 
 def opcionEnviarCorreo():
+    """Funcionamiento: Función para que se ejecute cuando se accione el boton de enviar correo.
+        Entradas:
+        No tiene entradas.
+        Salidas:
+        No tiene salidas.
+        """
 
-    def opcionEnviarCorreo(cajaTexto):   
+    def opcionEnviarCorreo(cajaTexto):
+        """Funcionamiento: Esta función es la función principal que se llama al hacer clic en el botón "Enviar" en la ventana de correo. Obtiene el valor de correo de la caja de texto, valida si es una dirección de correo válida y envía un correo si es válido. Muestra un mensaje de éxito o error en función de la validación.
+        Entradas:
+        - cajaTexto [tk.Entry]: La caja de texto donde el usuario ingresa la dirección de correo.
+        Salidas:
+        No tiene salidas directas, pero muestra mensajes de éxito o error mediante messagebox.showinfo.    
+        """   
         correo=cajaTexto.get()
         if len(correo)>0 and validarCorreo(correo):
             enviarCorreo(correo)
@@ -39,6 +53,12 @@ def opcionEnviarCorreo():
             cajaTexto.delete(0, tk.END)
 
     def cerrarVentanaCorreo():
+        """Funcionamiento: Esta función se encarga de cerrar la ventana de correo (ventanaCorreo) y restaurar la ventana principal (ventana) cuando el usuario hace clic en el botón "Volver".
+        Entradas:
+        No tiene entradas.
+        Salidas:
+        No tiene salidas.
+        """
         ventanaCorreo.destroy()
         ventana.deiconify()
 
@@ -48,17 +68,13 @@ def opcionEnviarCorreo():
     ventanaCorreo.geometry("420x205")
     ventanaCorreo.config(bg="lightblue")
 
-    #Texto en la ventana
     label = tk.Label(ventanaCorreo, text="Ventana para enviar bases de datos por correo.")
     label.config(fg="green", bg="lightgrey", font=("Verdana", 12))
     label.place(x=15, y=10)
 
-    #Caja de texto
     cajaTexto = tk.Entry(ventanaCorreo, width=50)
     cajaTexto.place(x=35, y=80)
 
-
-    #Botones
     botonVolver = tk.Button(ventanaCorreo, text="Volver",font=("Verdana", 10),bg="red",command=cerrarVentanaCorreo,fg="white")
     botonVolver.place(x=355, y=165)
 
@@ -66,21 +82,58 @@ def opcionEnviarCorreo():
     botonEnviar.place(x=155, y=125)
 
 def opcionBaseDatos():
+    """Funcionamiento: Esta función se encarga de crear una base de datos utilizando las variables globales diccEstudiantes y diccMentores. Luego, muestra un mensaje de información que indica que la base de datos se ha creado con éxito.
+        Entradas:
+            No tiene entradas explícitas, pero utiliza las siguientes variables globales:
+            diccEstudiantes: Un diccionario que parece contener información de estudiantes.
+            diccMentores: Un diccionario que parece contener información de mentores.
+        Salidas:
+            No tiene salidas directas, pero muestra un mensaje de éxito mediante messagebox.showinfo.
+    """
     global diccEstudiantes
     global diccMentores
     crearBaseDatos(diccEstudiantes, diccMentores)
     messagebox.showinfo("Base de datos creada", "La base de datos se ha creado con éxito.")
 
 def opcionGenerarReportes():
+    """Funcionamiento: Esta función es la función principal que se muestra al usuario cuando desea generar reportes. Permite al usuario seleccionar entre tres opciones de generación de reportes: reporte por mentor, reporte por carrera y reporte por sede. Cada opción ejecuta una función específica que genera el informe correspondiente y muestra un mensaje de éxito.
+        Entradas:
+            No tiene entradas directas, pero utiliza las siguientes variables globales y funciones:
+            diccMentores: Un diccionario que parece contener información de mentores.
+            diccEstudiantes: Un diccionario que parece contener información de estudiantes.
+            estructuraCarrerasCantidad: Una estructura que parece contener información sobre carreras y cantidades.
+            inicialesSedes: Una variable que parece contener información sobre iniciales de sedes.
+        Salidas:
+            No tiene salidas directas, pero muestra mensajes de éxito mediante messagebox.showinfo.
+    """
 
     def opcionReporteMentor():
+        """Funcionamiento: Esta función se encarga de generar un informe de mentor utilizando las variables globales diccMentores y diccEstudiantes. Luego, muestra un mensaje de información que indica que el informe se ha generado con éxito.
+        Entradas:
+            No tiene entradas directas, pero utiliza las variables globales diccMentores y diccEstudiantes.
+        Salidas:
+            No tiene salidas directas, pero muestra un mensaje de éxito mediante messagebox.showinfo.
+        """
         global diccMentores
         global diccEstudiantes
         generarReporteMentor(diccMentores, diccEstudiantes)
         messagebox.showinfo("Reporte generado", "El reporte se ha generado con éxito.")
 
     def opcionReporteCarrera():
-        def generar_reporte(carrera):
+        """Funcionamiento: Esta función permite al usuario seleccionar una carrera específica de un menú desplegable. Luego, genera un informe de esa carrera utilizando las variables globales estructuraCarrerasCantidad y diccEstudiantes. Finalmente, muestra un mensaje de información que indica que el informe se ha generado con éxito.
+        Entradas:
+            No tiene entradas directas, pero utiliza las variables globales estructuraCarrerasCantidad.
+        Salidas:
+            No tiene salidas directas, pero muestra un mensaje de éxito mediante messagebox.showinfo.
+        """
+        def generarReporte(carrera):
+            """Funcionamiento: Esta función se encarga de generar un informe específico de una carrera dada. Utiliza las variables globales diccEstudiantes y estructuraCarrerasCantidad para generar el informe de la carrera especificada. Luego, muestra un mensaje de información que indica que el informe se ha generado con éxito y cierra la ventana que permitió la selección de la carrera.
+                Entradas:
+                    carrera [str]: El nombre de la carrera para la cual se generará el informe.
+                Salidas:
+                    No tiene salidas directas, pero muestra un mensaje de éxito mediante messagebox.showinfo.
+                    Cierra la ventana que se utiliza para seleccionar la carrera (ventanaCarrera).
+            """
             global diccEstudiantes
             global estructuraCarrerasCantidad
             generarReporteCarrera(estructuraCarrerasCantidad, diccEstudiantes, carrera)
@@ -99,12 +152,18 @@ def opcionGenerarReportes():
 
         for carrera in carreras:
             
-            menu_carreras.add_command(label=carrera, command=lambda c=carrera: generar_reporte(c))
+            menu_carreras.add_command(label=carrera, command=lambda c=carrera: generarReporte(c))
 
        
         ventanaCarrera.config(menu=menu_carreras)
 
     def opcionReporteSede():
+        """Funcionamiento: Esta función se encarga de generar un informe de sede utilizando las variables globales estructuraCarrerasCantidad, diccEstudiantes y inicialesSedes. Luego, muestra un mensaje de información que indica que el informe se ha generado con éxito.
+        Entradas:
+            No tiene entradas directas, pero utiliza las variables globales estructuraCarrerasCantidad y inicialesSedes.
+        Salidas:
+            No tiene salidas directas, pero muestra un mensaje de éxito mediante messagebox.showinfo.
+        """
         global diccEstudiantes
         global estructuraCarrerasCantidad
         global inicialesSedes
@@ -112,6 +171,12 @@ def opcionGenerarReportes():
         messagebox.showinfo("Reporte generado", "El reporte se ha generado con éxito.")
 
     def cerrarVentanaReportes():
+        """Funcionamiento: Esta función se encarga de cerrar la ventana de reportes (ventanaReportes) y restaurar la ventana principal (ventana) cuando el usuario hace clic en el botón "Volver".
+        Entradas:
+            No tiene entradas.
+        Salidas:
+            No tiene salidas.
+        """
         ventanaReportes.destroy()
         ventana.deiconify()
 
@@ -121,16 +186,13 @@ def opcionGenerarReportes():
     ventanaReportes.config(bg="lightblue")
     ventana.withdraw()
 
-    #Texto en la ventana
     label = tk.Label(ventanaReportes, text="Aqui puedes generar los reportes.")
     label.config(fg="green", bg="lightgrey", font=("Verdana", 12))
     label.place(x=25, y=10)
 
-    #Botones
     botonVolver = tk.Button(ventanaReportes, text="Volver",font=("Verdana", 10),bg="red",command=cerrarVentanaReportes,fg="white")
     botonVolver.place(x=490, y=265)
 
-    #Menu desplegable
     menu = tk.Menu(ventanaReportes)
     opciones = tk.Menu(menu,tearoff=0)
     opciones.add_command(label="Reporte por sede",command=opcionReporteSede)
@@ -142,21 +204,49 @@ def opcionGenerarReportes():
     ventanaReportes.config(menu=menu)
 
 def opcionActualizarEstudiante():
-
-
+    """Funcionamiento: Esta función se utiliza para habilitar las opciones de actualización de información para estudiantes. Activa un menú desplegable con opciones para actualizar el nombre, los apellidos, el número de teléfono o el correo electrónico de un estudiante.
+            Entradas: 
+                No tiene entradas.
+            Salidas:
+                No tiene salidas directas, pero habilita las opciones de actualización en un menú desplegable.
+    """
     def actualizarInfo(ventanaActualizarNombre,cajaTexto,seccion):
+        """Funcionamiento: Esta función se encarga de actualizar la información de un estudiante o mentor con el carnet dado en función de la sección proporcionada. Puede actualizar el nombre, los apellidos, el número de teléfono o el correo electrónico del estudiante o mentor. Luego de la actualización, cierra la ventana de actualización.
+            Entradas:
+                ventanaActualizarNombre [tk.Toplevel]: La ventana que se utiliza para ingresar la nueva información.
+                cajaTexto [tk.Entry]: La caja de texto donde se ingresa la nueva información.
+                seccion [int]: Un valor que representa la sección de información a actualizar (0 para nombre, 1 para primer apellido, 2 para segundo apellido, 3 para teléfono, 4 para correo).
+            Salidas:
+                No tiene salidas directas, pero actualiza la información del estudiante o mentor en el diccionario diccEstudiantes y cierra la ventana de actualización.
+        """
         global carnet
         info=cajaTexto.get()
         if len(info)>0 and seccion>=0 and seccion <=2 :
-            nombreCompleto=list(diccEstudiantes[carnet][0])
-            if seccion == 0:
-                nombreCompleto[0]=info
-            elif seccion == 1:
-                nombreCompleto[1]=info
-            elif seccion == 2:
-                nombreCompleto[2]=info
-            nombreCompleto=tuple(nombreCompleto)
-            diccEstudiantes[carnet][0]=nombreCompleto
+            if carnet[:4]=="2024":
+                nombreCompleto=list(diccEstudiantes[carnet][0])
+                if seccion == 0:
+                    nombreCompleto[0]=info
+                elif seccion == 1:
+                    nombreCompleto[1]=info
+                elif seccion == 2:
+                    nombreCompleto[2]=info
+                nombreCompleto=tuple(nombreCompleto)
+                diccEstudiantes[carnet][0]=nombreCompleto
+            else:
+                global sedeMentor
+                mentores=diccMentores[sedeMentor]
+                for mentor in mentores:
+                    if mentor[0]==carnet:
+                        nombreCompleto=list(mentor[1])
+                        if seccion == 0:
+                            nombreCompleto[0]=info
+                        elif seccion == 1:
+                            nombreCompleto[1]=info
+                        elif seccion == 2:
+                            nombreCompleto[2]=info
+                        nombreCompleto=tuple(nombreCompleto)
+                        mentor[1]=nombreCompleto
+                        break
             ventanaActualizarNombre.destroy()
         
         elif len(info)>0 and seccion==3:
@@ -196,14 +286,25 @@ def opcionActualizarEstudiante():
             mostrarInfoMentor(carnet)
 
     def habilitarOpciones():
+        """Funcionamiento: Esta función habilita las opciones de actualización en un menú desplegable para que el usuario pueda seleccionar la sección de información que desea actualizar.
+            Entradas:
+                No tiene entradas.
+            Salidas:
+                No tiene salidas directas, pero habilita las opciones de actualización en un menú desplegable.
+        """
         opciones.entryconfig("Actualizar nombre", state=NORMAL)
         opciones.entryconfig("Actualizar primer apellido", state=NORMAL)
         opciones.entryconfig("Actualizar segundo apellido", state=NORMAL)
         opciones.entryconfig("Actualizar teléfono", state=NORMAL)
         opciones.entryconfig("Actualizar correo", state=NORMAL)
 
-
     def opcionActualizarCorreo():
+        """Funcionamiento: Esta función muestra una ventana para que el usuario ingrese el nuevo correo a registrar. Luego, llama a la función actualizarInfo con la sección 4 (correo) como parámetro.
+            Entradas:
+                No tiene entradas.
+            Salidas:
+                No tiene salidas directas, pero llama a la función actualizarInfo con la sección 4 (correo) como parámetro.
+        """
         ventanaActualizarNombre=tk.Toplevel(ventanaActualizarInfo)
         ventanaActualizarNombre.title("Ingresa el nuevo correo a registrar.")
         ventanaActualizarNombre.geometry("400x150")
@@ -214,6 +315,12 @@ def opcionActualizarEstudiante():
         botonAceptar.place(x=150, y=100)
 
     def opcionActualizarTelefono():
+        """Funcionamiento: Esta función muestra una ventana para que el usuario ingrese el nuevo número de teléfono a registrar. Luego, llama a la función actualizarInfo con la sección 3 (teléfono) como parámetro.
+            Entradas:
+                No tiene entradas.
+            Salidas:
+                No tiene salidas directas, pero llama a la función actualizarInfo con la sección 3 (teléfono) como parámetro.
+        """
         ventanaActualizarNombre=tk.Toplevel(ventanaActualizarInfo)
         ventanaActualizarNombre.title("Ingresa el nuevo número a registrar.")
         ventanaActualizarNombre.geometry("400x150")
@@ -224,6 +331,13 @@ def opcionActualizarEstudiante():
         botonAceptar.place(x=150, y=100)
 
     def opcionActualizarApellido(pos):
+        """
+        Funcionamiento: Esta función muestra una ventana para que el usuario ingrese el nuevo apellido a registrar (ya sea primer o segundo apellido, dependiendo de la posición). Luego, llama a la función actualizarInfo con la sección 1 o 2 (primer o segundo apellido) como parámetro.
+            Entradas:
+                pos [int]: Un valor que indica si se debe actualizar el primer o segundo apellido (1 para primer apellido, 2 para segundo apellido).
+            Salidas:
+                No tiene salidas directas, pero llama a la función actualizarInfo con la sección 1 o 2 (primer o segundo apellido) como parámetro.
+        """
         ventanaActualizarNombre=tk.Toplevel(ventanaActualizarInfo)
         ventanaActualizarNombre.title("Ingresa el nuevo apellido a registrar.")
         ventanaActualizarNombre.geometry("400x150")
@@ -238,6 +352,12 @@ def opcionActualizarEstudiante():
             botonAceptar.place(x=150, y=100)
 
     def opcionActualizarNombre():
+        """Funcionamiento: Esta función muestra una ventana para que el usuario ingrese el nuevo nombre a registrar. Luego, llama a la función actualizarInfo con la sección 0 (nombre) como parámetro.
+            Entradas:
+                No tiene entradas.
+            Salidas:
+                No tiene salidas directas, pero llama a la función actualizarInfo con la sección 0 (nombre) como parámetro.
+        """
         ventanaActualizarNombre=tk.Toplevel(ventanaActualizarInfo)
         ventanaActualizarNombre.title("Ingresa el nuevo nombre a registrar.")
         ventanaActualizarNombre.geometry("400x150")
@@ -249,6 +369,16 @@ def opcionActualizarEstudiante():
         botonAceptar.place(x=150, y=100)
 
     def mostrarInfoMentor(carnet):
+        """Funcionamiento: Esta función muestra la información de un mentor con el carnet dado en la ventana de actualización. La información incluye el nombre, los apellidos, el correo, el tipo (estudiante mentor) y se muestra en etiquetas en la ventana.
+            Entradas:
+                carnet [str]: El carnet del mentor del cual se mostrará la información.
+            Salidas:
+                No tiene salidas directas, pero muestra la información del mentor en la ventana de actualización.
+        """
+        for widget in ventanaActualizarInfo.winfo_children():
+            if widget.winfo_class() == 'Label' and widget.cget("text")!="Ventana para actualizar información de los estudiantes.":
+                widget.destroy()
+        global sedeMentor
         for sede in diccMentores.keys():
                 for mentor in diccMentores.get(sede, []):
                     if mentor[0] == carnet:
@@ -257,7 +387,9 @@ def opcionActualizarEstudiante():
                         segundoApellido = mentor[1][2]
                         correo = mentor[3]
                         tipo= "Estudiante mentor"
-                        break
+                        sedeMentor=sede
+                        break 
+        
         labelNombre = tk.Label(ventanaActualizarInfo, text=f"Nombre: {nombre}")
         labelNombre.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelNombre.place(x=75, y=50)
@@ -273,43 +405,66 @@ def opcionActualizarEstudiante():
         labelTipo = tk.Label(ventanaActualizarInfo, text=f"Tipo: {tipo}")
         labelTipo.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelTipo.place(x=75, y=200)
-
+                                
     def mostrarInfoEstudiante(carnet):
-        
+        """Funcionamiento: Esta función muestra la información de un estudiante con el carnet dado en la ventana de actualización. La información incluye el nombre, los apellidos, el teléfono, el correo, el tipo ("Primer ingreso") y se muestra en etiquetas en la ventana.
+        Entradas:
+            carnet [str]: El carnet del estudiante del cual se mostrará la información.
+        Salidas:
+            No tiene salidas directas, pero muestra la información del estudiante en la ventana de actualización.
+        """       
+        for widget in ventanaActualizarInfo.winfo_children():
+            if widget.winfo_class() == 'Label' and widget.cget("text")!="Ventana para actualizar información de los estudiantes.":
+                widget.destroy()
+
         informacion = diccEstudiantes.get(carnet, [])
         nombre = informacion[0][0]
         primerApellido = informacion[0][1]
         segundoApellido = informacion[0][2]
         telefono = informacion[1]
         correo = informacion[2]
-        tipo= "Primer ingreso"
-  
+        tipo = "Primer ingreso"
+
         labelNombre = tk.Label(ventanaActualizarInfo, text=f"Nombre: {nombre}")
         labelNombre.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelNombre.place(x=75, y=50)
+
         labelPrimerApellido = tk.Label(ventanaActualizarInfo, text=f"Primer apellido: {primerApellido}")
         labelPrimerApellido.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelPrimerApellido.place(x=75, y=80)
+
         labelSegundoApellido = tk.Label(ventanaActualizarInfo, text=f"Segundo apellido: {segundoApellido}")
         labelSegundoApellido.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelSegundoApellido.place(x=75, y=110)
+
         labelTelefono = tk.Label(ventanaActualizarInfo, text=f"Teléfono: {telefono}")
         labelTelefono.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelTelefono.place(x=75, y=140)
+
         labelCorreo = tk.Label(ventanaActualizarInfo, text=f"Correo: {correo}")
         labelCorreo.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelCorreo.place(x=75, y=170)
+
         labelTipo = tk.Label(ventanaActualizarInfo, text=f"Tipo: {tipo}")
         labelTipo.config(fg="green", bg="lightgrey", font=("Verdana", 12))
         labelTipo.place(x=75, y=200)
 
-        
+
+  
     def obtenerCarnet(buscarEstudiantetxt,cajaTexto):
+        """Funcionamiento: Esta función obtiene el número de carnet ingresado por el usuario y verifica si es válido. Luego, llama a las funciones mostrarInfoEstudiante o mostrarInfoMentor según el formato del carnet y si se encuentra registrado. Además, habilita las opciones de actualización y retorna el carnet.
+            Entradas:
+                buscarEstudiantetxt [tk.Toplevel]: La ventana utilizada para ingresar el número de carnet.
+                cajaTexto [tk.Entry]: La caja de texto donde se ingresa el número de carnet.
+            Salidas:
+                carnet [str]: El número de carnet ingresado y validado. Si es válido, se utiliza para mostrar la información del estudiante o mentor y habilitar las opciones de actualización.
+        """
         global carnet
         global totalCarnets
-        carnet=cajaTexto.get()
-        if len(carnet)==10:
-            if carnet in totalCarnets:
+        pcarnet=cajaTexto.get()
+        if len(pcarnet)==10:
+            if pcarnet in totalCarnets:
+                carnet=pcarnet
                 if carnet[:4]=="2024":
                     mostrarInfoEstudiante(carnet)
                 else:
@@ -325,6 +480,12 @@ def opcionActualizarEstudiante():
             cajaTexto.delete(0,END)
 
     def buscarEstudiante():
+        """Funcionamiento: Esta función muestra una ventana para que el usuario ingrese el número de carnet del estudiante a buscar. Luego, llama a la función obtenerCarnet para obtener y validar el carnet ingresado.
+            Entradas:
+                No tiene entradas.
+            Salidas:
+                No tiene salidas directas, pero muestra una ventana para ingresar el número de carnet y llama a obtenerCarnet para validar y obtener el carnet.
+        """
         buscarEstudiantetxt=tk.Toplevel(ventanaActualizarInfo)
         buscarEstudiantetxt.title("Ingrese el número de carnet del estudiante a buscar.")
         buscarEstudiantetxt.geometry("400x150")
@@ -332,10 +493,16 @@ def opcionActualizarEstudiante():
         cajaTexto = tk.Entry(buscarEstudiantetxt)
         cajaTexto.place(x=100, y=50)
         
-        botonAceptar = tk.Button(buscarEstudiantetxt, text="Agregar",font=("Verdana", 10),bg="green",command=lambda:obtenerCarnet(buscarEstudiantetxt,cajaTexto),fg="white")
+        botonAceptar = tk.Button(buscarEstudiantetxt, text="Buscar",font=("Verdana", 10),bg="green",command=lambda:obtenerCarnet(buscarEstudiantetxt,cajaTexto),fg="white")
         botonAceptar.place(x=150, y=100)
 
     def cerrarVentanaActualizarInfo():
+        """Funcionamiento: Esta función se encarga de cerrar la ventana de actualización de información (ventanaActualizarInfo) y restaurar la ventana principal (ventana) cuando el usuario hace clic en el botón "Volver".
+            Entradas:
+                No tiene entradas.
+            Salidas:
+                No tiene salidas.
+        """
         ventanaActualizarInfo.destroy()
         ventana.deiconify()
     
@@ -367,20 +534,36 @@ def opcionActualizarEstudiante():
     opciones.add_command(label="Actualizar correo",command=opcionActualizarCorreo,state=DISABLED)
 
 
-    menu.add_cascade(label="Opciones para actualiar información", menu=opciones)
+    menu.add_cascade(label="Opciones para actualizar información", menu=opciones)
     ventanaActualizarInfo.config(menu=menu)    
 
 def opcionAsignarMentores():
+    """Funcionamiento: Esta función se encarga de asignar mentores a los estudiantes y actualizar el diccionario diccEstudiantes con esta asignación. Luego, retorna el diccionario actualizado.
+        Entradas: 
+            No tiene entradas.
+        Salidas:
+            diccEstudiantes [dict]: El diccionario actualizado de estudiantes con la asignación de mentores.
+    """
     global diccEstudiantes
     global diccMentores
     global estructuraCarrerasCantidad
-    print(diccEstudiantes)
     diccEstudiantes=asignarMentores(diccEstudiantes,diccMentores,estructuraCarrerasCantidad)
     return diccEstudiantes
 
 def crearMentores():
-    
+    """Funcionamiento: Esta función se utiliza para crear la interfaz de usuario de la pestaña de mentores. Muestra la información de los mentores por sede en una ventana gráfica.
+        Entradas: 
+            No tiene entradas.
+        Salidas: 
+            No tiene salidas directas, pero crea la interfaz de usuario para mostrar la información de los mentores por sede.
+    """    
     def mostrarInfo(diccMentores):
+        """Funcionamiento: Esta función se encarga de mostrar la información de los mentores en la ventana gráfica de la pestaña de mentores. Borra la información anterior y muestra la información actualizada de los mentores por sede.
+        Entradas:
+            diccMentores [dict]: El diccionario que contiene la información de los mentores por sede.
+        Salidas: 
+            No tiene salidas directas, pero muestra la información de los mentores en la ventana gráfica.
+        """
         for i in range(1, 6):
             for j in range(1, 2):
                 matrizLabel[i][j].destroy()
@@ -402,6 +585,12 @@ def crearMentores():
         return 
     
     def cerrarVentanaMentores():
+        """Funcionamiento: Esta función se encarga de cerrar la ventana de la pestaña de mentores y restaurar la ventana principal cuando el usuario hace clic en el botón "Volver".
+            Entradas: 
+                No tiene entradas.
+            Salidas: 
+                No tiene salidas directas, pero cierra la ventana de la pestaña de mentores y restaura la ventana principal.
+        """
         ventanaMentores.destroy()
         ventana.deiconify()
 
@@ -445,6 +634,12 @@ def crearMentores():
     mostrarInfo(diccMentores)
   
 def estudiantesCarreraPorSede():
+    """Funcionamiento: Esta función se encarga de generar e insertar la información de los estudiantes admitidos por carrera y sede en el diccionario diccEstudiantes. Además, muestra un mensaje de información al usuario y retorna el diccionario actualizado.
+        Entradas: 
+            No tiene entradas.
+        Salidas:
+            diccEstudiantes [dict]: El diccionario actualizado de estudiantes por carrera y sede.
+    """
     global diccEstudiantes
     global totalCarnets
     global totalNumeros
@@ -460,6 +655,12 @@ def estudiantesCarreraPorSede():
     return diccEstudiantes
 
 def crearEstructuraEstudiantesCarreraSede():
+    """Funcionamiento: Esta función crea una estructura de datos que representa la cantidad de estudiantes admitidos por carrera y sede. Inicializa una estructura de diccionario que contiene listas de carreras por sede, inicialmente con 0 estudiantes admitidos en cada una.
+        Entradas: 
+            No tiene entradas.
+        Salidas:
+            estructuraAdmitidosCarrera [dict]: La estructura de datos que contiene la cantidad de estudiantes admitidos por carrera y sede.
+    """
     info=obtenerSedesCarreras(inicialesSedes)
     estructuraAdmitidosCarrera={}
     for sede in info.keys():
@@ -471,8 +672,22 @@ def crearEstructuraEstudiantesCarreraSede():
     return estructuraAdmitidosCarrera
 
 def estudiantesPorSede():
+    """Funcionamiento: Esta función se encarga de distribuir la cantidad de estudiantes admitidos en cada sede y carrera según una lógica específica. Luego, actualiza la información en una matriz y la muestra en una ventana gráfica.
+        Entradas: 
+            No tiene entradas.
+        Salidas: 
+            No tiene salidas directas, pero distribuye y muestra la información de estudiantes admitidos en la ventana gráfica.
+    """
     
     def distribuirAdmitidos(totalAdmitidos, estructuraCarrerasCantidad):
+        """
+        Funcionamiento: Esta función distribuye la cantidad de estudiantes admitidos en cada sede y carrera según una lógica específica, teniendo en cuenta la cantidad total de cupos.
+        Entradas:
+            totalAdmitidos [dict]: Un diccionario que contiene la cantidad total de estudiantes admitidos por sede.
+            estructuraCarrerasCantidad [dict]: Una estructura de datos que representa la cantidad de estudiantes admitidos por carrera y sede.
+        Salidas:
+            estructuraCarrerasCantidad [dict]: La estructura actualizada de la cantidad de estudiantes admitidos por carrera y sede.
+        """
         for sede, carreras in estructuraCarrerasCantidad.items():
             total_cupos = totalAdmitidos[sede]
 
@@ -487,6 +702,12 @@ def estudiantesPorSede():
         return estructuraCarrerasCantidad
 
     def actualizarMatriz():
+        """Funcionamiento: Esta función se encarga de actualizar y mostrar la información de estudiantes admitidos en la ventana gráfica.
+        Entradas: 
+            No tiene entradas.
+        Salidas: 
+            No tiene salidas directas, pero actualiza y muestra la información en la ventana gráfica.
+        """
         for i in range(1, 6):
             for j in range(1, 3):
                 matrizLabel[i][j].destroy()
@@ -595,6 +816,12 @@ def estudiantesPorSede():
     mostrarMatrizVacia()
     
 def habilitarOpciones():
+    """Funcionamiento: Esta función se encarga de habilitar las opciones en un entorno gráfico. En particular, habilita una serie de botones con las opciones disponibles para el usuario.
+        Entradas: 
+            No tiene entradas.
+        Salidas: 
+            No tiene salidas directas, pero habilita los botones para permitir al usuario realizar diversas acciones en el entorno gráfico.
+    """
     boton2.config(state=tk.NORMAL)
     boton3.config(state=tk.NORMAL)
     boton4.config(state=tk.NORMAL)
@@ -603,18 +830,16 @@ def habilitarOpciones():
     boton7.config(state=tk.NORMAL)
     boton8.config(state=tk.NORMAL)
 
-#Personalización de la ventana
+
+#Programa principal
 ventana.title("Atención a la generación de 2024.")
 ventana.geometry("550x300")
-#ventana.iconbitmap("logo.ico") para cambiar el icono de la aplicación
 ventana.config(bg="lightblue")
 
-#Texto en la ventana
 label = tk.Label(ventana, text="Bienvenid@ a la aplicación de atención a la generación 2024.")
 label.config(fg="green", bg="lightgrey", font=("Verdana", 12))
 label.place(x=25, y=10)
 
-#Creacion botones
 boton1 = tk.Button(ventana, text="Estudiantes por sede",font=("Verdana", 10),command=estudiantesPorSede)
 boton2 = tk.Button(ventana, text="Estudiantes de carrera por sede",font=("Verdana", 10),state="disabled",command=estudiantesCarreraPorSede)
 boton3 = tk.Button(ventana, text="Crear mentores",font=("Verdana", 10),state="disabled",command=crearMentores)
@@ -626,7 +851,6 @@ boton8 = tk.Button(ventana, text="Enviar correo",font=("Verdana", 10),command=op
 boton9 = tk.Button(ventana, text="Salir",font=("Verdana", 10),bg="red",command=ventana.destroy,fg="white")
 
 
-#Posicionamiento de los botones
 boton1.place(x=85, y=50)
 boton2.place(x=45, y=95)
 boton3.place(x=90, y=140)
@@ -637,10 +861,7 @@ boton7.place(x=305, y=140)
 boton8.place(x=335, y=185)
 boton9.place(x=475, y=260)
 
-#Creación de la estructura de datos
 estructuraCarrerasCantidad=crearEstructuraEstudiantesCarreraSede()
-
-
 ventana.mainloop()
 
 

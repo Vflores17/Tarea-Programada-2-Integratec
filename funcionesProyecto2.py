@@ -1,3 +1,11 @@
+######################################################
+#  Elaborado por: Vidal Flores                      ##
+#  Fecha de Creación: 10/00/2023 12:10              ##
+#  Fecha de última Modificación: 27/10/2023 20:56   ##
+#  Versión: 3.10.4                                  ##
+######################################################
+
+#importación de librerias
 import requests
 from bs4 import BeautifulSoup
 import random
@@ -10,64 +18,70 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import os
-formato_archivo="bdIntegraTEC"
 
+#variables globales
+formatoArchivo="bdIntegraTEC"
 urlSedes="https://www.tec.ac.cr/carreras"
-#totalAdmitidos={"CTLSC":175,"CTLSJ":75,"CAL":75,"CTCC":625,"CAA":50}
-#estructura={'CTLSC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Gestión del Turismo Rural Sostenible', 25], ['Bachillerato en Gestión en Sostenibilidad Turística', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronomía', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25]], 'CTLSJ': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Arquitectura', 25]], 'CAL': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Bachillerato en Producción Industrial,  Limón', 25]], 'CTCC': [['Bachillerato en Administración de Empresas', 25], ['Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 25], ['Bachillerato en Gestión del Turismo Sostenible', 25], ['Bachillerato en Ingeniería en Biotecnología', 25], ['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Administración de Tecnología de Información', 25], ['Licenciatura en Ingeniería Agrícola', 25], ['Licenciatura en Ingeniería Ambiental', 25], ['Licenciatura en Ingeniería Electrónica', 25], ['Licenciatura en Ingeniería en Agronegocios', 25], ['Licenciatura en Ingeniería en Computadores', 25], ['Licenciatura en Ingeniería en Construcción', 25], ['Licenciatura en Ingeniería en Diseño Industrial', 25], ['Licenciatura en Ingeniería en Materiales', 25], ['Licenciatura en Ingeniería en Producción Industrial', 25], ['Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 25], ['Licenciatura en Ingeniería Física', 25], ['Licenciatura en Ingeniería Forestal', 25], ['Licenciatura en Ingeniería Mecatrónica', 25], ['Licenciatura en Mantenimiento Industrial', 25]], 'CAA': [['Bachillerato en Ingeniería en Computación', 25], ['Licenciatura en Ingeniería Electrónica', 25]]}
-#diccMentores={'CTLSC': [['2023027180', ('Stacie', 'Taylor', 'Powell'), 'Bachillerato en Administración de Empresas', 'StTaylor@estudiantec.cr'], ['2023022268', ('Leslie', 'Robbins', 'Garcia'), 'Bachillerato en Gestión del Turismo Rural Sostenible', 'LeRobbins@estudiantec.cr'], ['2023023620', ('Ariel', 'Trujillo', 'Davis'), 'Bachillerato en Gestión en Sostenibilidad Turística', 'ArTrujillo@estudiantec.cr'], ['2023021783', ('Dennis', 'Tanner', 'Hensley'), 'Bachillerato en Ingeniería en Computación', 'DeTanner@estudiantec.cr'], ['2023028595', ('Christopher', 'Williams', 'Fleming'), 'Licenciatura en Ingeniería Electrónica', 'ChWilliams@estudiantec.cr'], ['2023022060', ('Lisa', 'Vang', 'Castaneda'), 'Licenciatura en Ingeniería en Agronomía', 'LiVang@estudiantec.cr'], ['2023023729', ('Vanessa', 'Williamson', 'Smith'), 'Licenciatura en Ingeniería en Producción Industrial', 'VaWilliamson@estudiantec.cr']], 'CTLSJ': [['2023033049', ('Jonathan', 'Lopez', 'Dickerson'), 'Bachillerato en Administración de Empresas', 'JoLopez@estudiantec.cr'], ['2023035141', ('Paula', 'Watts', 'Clark'), 'Bachillerato en Ingeniería en Computación', 'PaWatts@estudiantec.cr'], ['2023035984', ('Robert', 'Giles', 'Marshall'), 'Licenciatura en Arquitectura', 'RoGiles@estudiantec.cr']], 'CAL': [['2023057426', ('Julia', 'Gonzalez', 'Sanders'), 'Bachillerato en Administración de Empresas', 'JuGonzalez@estudiantec.cr'], ['2023057653', ('Marcus', 'Tanner', 'Kim'), 'Bachillerato en Ingeniería en Computación', 'MaTanner@estudiantec.cr'], ['2023056386', ('Tina', 'Collins', 'Rhodes'), 'Bachillerato en Producción Industrial,  Limón', 'TiCollins@estudiantec.cr']], 'CTCC': [['2023016134', ('Joel', 'Higgins', 'Duarte'), 'Bachillerato en Administración de Empresas', 'JoHiggins@estudiantec.cr'], ['2023018883', ('Frederick', 'Ray', 'Torres'), 'Bachillerato en Enseñanza de la Matemática con Entornos Tecnológicos', 'FrRay@estudiantec.cr'], ['2023013656', ('Cristina', 'Stevens', 'Lowery'), 'Bachillerato en Gestión del Turismo Sostenible', 'CrStevens@estudiantec.cr'], ['2023016929', ('Zachary', 'Cardenas', 'Ramirez'), 'Bachillerato en Ingeniería en Biotecnología', 'ZaCardenas@estudiantec.cr'], ['2023017535', ('Michelle', 'Wall', 'Ortiz'), 'Bachillerato en Ingeniería en Computación', 'MiWall@estudiantec.cr'], ['2023013096', ('Douglas', 'Jackson', 'Escobar'), 'Licenciatura en Administración de Tecnología de Información', 'DoJackson@estudiantec.cr'], ['2023013492', ('James', 'Rogers', 'Nichols'), 'Licenciatura en Ingeniería Agrícola', 'JaRogers@estudiantec.cr'], ['2023017427', ('Carol', 'Bates', 'Clark'), 'Licenciatura en Ingeniería Ambiental', 'CaBates@estudiantec.cr'], ['2023018784', ('Victor', 'Chambers', 'Gill'), 'Licenciatura en Ingeniería Electrónica', 'ViChambers@estudiantec.cr'], ['2023018140', ('Christopher', 'Marshall', 'Gates'), 'Licenciatura en Ingeniería en Agronegocios', 'ChMarshall@estudiantec.cr'], ['2023011145', ('Austin', 'Boyd', 'Cox'), 'Licenciatura en Ingeniería en Computadores', 'AuBoyd@estudiantec.cr'], ['2023015984', ('David', 'Martinez', 'Gonzales'), 'Licenciatura en Ingeniería en Construcción', 'DaMartinez@estudiantec.cr'], ['2023011617', ('Adam', 'Alvarez', 'Ross'), 'Licenciatura en Ingeniería en Diseño Industrial', 'AdAlvarez@estudiantec.cr'], ['2023016435', ('James', 'Sanders', 'King'), 'Licenciatura en Ingeniería en Materiales', 'JaSanders@estudiantec.cr'], ['2023015299', ('Phillip', 'Love', 'Thomas'), 'Licenciatura en Ingeniería en Producción Industrial', 'PhLove@estudiantec.cr'], ['2023012068', ('Jerry', 'Rodriguez', 'Leblanc'), 'Licenciatura en Ingeniería en Seguridad Laboral e Higiene Ambiental', 'JeRodriguez@estudiantec.cr'], ['2023016166', ('Patrick', 'Waller', 'Church'), 'Licenciatura en Ingeniería Física', 'PaWaller@estudiantec.cr'], ['2023016506', ('Elijah', 'Giles', 'Klein'), 'Licenciatura en Ingeniería Forestal', 'ElGiles@estudiantec.cr'], ['2023018453', ('Anna', 'Pruitt', 'Mccullough'), 'Licenciatura en Ingeniería Mecatrónica', 'AnPruitt@estudiantec.cr'], ['2023015802', ('Shannon', 'Cain', 'Houston'), 'Licenciatura en Mantenimiento Industrial', 'ShCain@estudiantec.cr']], 'CAA': [['2023041882', ('Samuel', 'Estrada', 'Reyes'), 'Bachillerato en Ingeniería en Computación', 'SaEstrada@estudiantec.cr'], ['2023049765', ('James', 'Johnson', 'Jones'), 'Licenciatura en Ingeniería Electrónica', 'JaJohnson@estudiantec.cr']]}
-#codigosSedes = {"CTLSC": "02", "CTLSJ": "03", "CAL": "05", "CTCC": "01", "CAA": "04"}
 formato=r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$"
-#inicialesSedes={"Campus Tecnológico Local San Carlos": "CTLSC","Campus Tecnológico Local San José": "CTLSJ","Centro Académico de Limón": "CAL","Campus Tecnológico Central Cartago": "CTCC","Centro Académico de Alajuela": "CAA"}
+
+#Definición de funciones
 
 def enviarCorreo(correo):
+    """Funcionamiento: Esta función se encarga de enviar un correo electrónico con archivos adjuntos a una dirección de correo específica. Utiliza el protocolo SMTP y una cuenta de correo configurada para este propósito. Adjunta archivos que cumplan con un formato específico desde el directorio de trabajo actual.
+        Entradas:
+            correo [str]: La dirección de correo electrónico a la que se enviará el mensaje.
+        Salidas: 
+            No tiene salidas directas, pero envía un correo electrónico con archivos adjuntos a la dirección proporcionada.
+    """
+    servidor = 'smtp.gmail.com'  
+    usuario = 'floresvidal001@gmail.com'  
+    contra = 'dwrdpvkpqbsfvfhx' 
 
-     # Configuración de la conexión SMTP
-    servidor_smtp = 'smtp.gmail.com'  # Reemplaza con el servidor SMTP adecuado
-    usuario = 'floresvidal001@gmail.com'  # Reemplaza con tu dirección de correo
-    contraseña = 'dwrdpvkpqbsfvfhx'  # Reemplaza con tu contraseña
-
-    # Crear un objeto MIMEMultipart
+    
     mensaje = MIMEMultipart()
     mensaje['From'] = usuario
     mensaje['To'] = correo
     mensaje['Subject'] = 'Correo con las bases de datos IntegraTEC.'
 
-    # Agregar texto al mensaje
     mensaje.attach(MIMEText('Envio de los archivos con las bases de datos del programa integraTEC.'))
 
-    directorio_archivos = os.path.dirname(os.path.abspath(__file__))
+    directorioArchivos = os.path.dirname(os.path.abspath(__file__))
 
-    # Listar los archivos en el directorio
-    archivos_adjuntos = []
-    for nombre_archivo in os.listdir(directorio_archivos):
-        if nombre_archivo.startswith(formato_archivo):
-            archivo_completo = os.path.join(directorio_archivos, nombre_archivo)
-            archivos_adjuntos.append(archivo_completo)
+    archivosAdjuntos = []
+    for nombreArchivo in os.listdir(directorioArchivos):
+        if nombreArchivo.startswith(formatoArchivo):
+            archivo_completo = os.path.join(directorioArchivos, nombreArchivo)
+            archivosAdjuntos.append(archivo_completo)
 
-    if not archivos_adjuntos:
-        print(f"No se encontraron archivos con el formato '{formato_archivo}' en la carpeta.")
+    if not archivosAdjuntos:
+        print("No se encontraron archivos con el formato "+formatoArchivo+" en la carpeta.")
         return
     
-    print(archivos_adjuntos)
+    print(archivosAdjuntos)
     
-    for archivo_adjunto in archivos_adjuntos:
-        with open(archivo_adjunto, 'rb') as adjunto:
+    for archivoAdjunto in archivosAdjuntos:
+        with open(archivoAdjunto, 'rb') as adjunto:
             part = MIMEApplication(adjunto.read())
-            part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(archivo_adjunto))
+            part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(archivoAdjunto))
             mensaje.attach(part)
     
-    # Establecer la conexión SMTP
-    servidor = smtplib.SMTP_SSL(servidor_smtp)
-    servidor.login(usuario, contraseña)
+    
+    servidor = smtplib.SMTP_SSL(servidor)
+    servidor.login(usuario, contra)
 
-    # Enviar el correo
     servidor.sendmail(usuario, correo, mensaje.as_string())
 
-    # Cerrar la conexión SMTP
     servidor.quit()
 
 def generarArchivo(estudiantes,mentores,nombre):
+    """Funcionamiento: Esta función se encarga de generar un archivo CSV con datos de estudiantes y mentores. Los datos se proporcionan en forma de listas y se organizan en el archivo CSV con encabezados específicos.
+        Entradas:
+            estudiantes [list]: Una lista que contiene los datos de los estudiantes a incluir en el archivo CSV.
+            mentores [list]: Una lista que contiene los datos de los mentores a incluir en el archivo CSV.
+            nombre [str]: El nombre del archivo CSV que se generará.
+        Salidas: 
+            No tiene salidas directas, pero crea un archivo CSV con los datos de estudiantes y mentores organizados en columnas, con los encabezados apropiados.
+  """
     encabezadosEstudiantes = ["Sede", "Carrera", "Carnet", "Nombre", "Correo", "Teléfono", "Estudiante"]
     encabezadosMentores = ["Sede", "Carrera", "Carnet", "Nombre", "Correo", "Mentor"]
     with open(f"{nombre}.csv", mode='w', newline='') as archivo_csv:
@@ -82,6 +96,13 @@ def generarArchivo(estudiantes,mentores,nombre):
             writer.writerow(mentor)  
 
 def crearBaseDatos(diccEstudiantes,diccMentores):
+    """Funcionamiento: Esta función crea una base de datos con información de estudiantes y mentores y guarda los datos en un archivo CSV. Los datos se toman de los diccionarios diccEstudiantes y diccMentores, y se organizan en el archivo de salida.
+        Entradas:
+            diccEstudiantes [dict]: Un diccionario con información de estudiantes.
+            diccMentores [dict]: Un diccionario con información de mentores.
+        Salidas: 
+            No tiene salidas directas, pero genera un archivo CSV con los datos de estudiantes y mentores.
+    """
     
     fecha=datetime.datetime.now().strftime("%d-%m-%Y_%H-%M")
     infoEstudiantes=[]
@@ -102,6 +123,12 @@ def crearBaseDatos(diccEstudiantes,diccMentores):
     print("Base de datos creada con éxito.")
         
 def obtenerCarreras(estructura):
+    """Funcionamiento: Esta función recopila una lista de todas las carreras disponibles a partir de una estructura dada. La estructura es un diccionario que contiene información sobre las carreras en diferentes sedes.
+        Entradas:
+            estructura [dict]: Un diccionario que contiene información sobre las carreras en diferentes sedes.
+        Salidas: 
+            Una lista que contiene los nombres de todas las carreras disponibles.
+    """
     carreras=[]
     for sede in estructura.keys():
         for carrera in estructura[sede]:
@@ -110,6 +137,13 @@ def obtenerCarreras(estructura):
     return carreras
 
 def generarReporteMentor(diccMentores, diccEstudiantes):
+    """Funcionamiento: Esta función genera un reporte en formato HTML que muestra información sobre los mentores y los estudiantes asignados a cada mentor. Utiliza los diccionarios diccMentores y diccEstudiantes para obtener los datos.
+        Entradas:
+            diccMentores [dict]: Un diccionario con información de los mentores.
+            diccEstudiantes [dict]: Un diccionario con información de los estudiantes.
+        Salidas: 
+            No tiene salidas directas, pero crea un archivo HTML que contiene el reporte.
+    """
     with open("Reporte por mentor.html", "w", encoding="utf-8") as reporte:
         reporte.write('''<html>
                            <head>
@@ -122,40 +156,43 @@ def generarReporteMentor(diccMentores, diccEstudiantes):
         for sede, mentores in diccMentores.items():
             reporte.write(f'<h2>Sede: {sede}</h2>')
 
-            for mentor in mentores:
-                mentor_nombre = mentor[1][0]
-                mentor_carnet = mentor[0]
-                reporte.write(f'''<h3>Mentor: {mentor_nombre}</h3>
-                              <table border='1'>
-                                   <tr bgcolor="0C9208">
-                                        <th style="color: white;"> </th>
-                                        <th style="color: white;">Carnet del estudiante</th>
-                                        <th style="color: white;">Nombre del estudiante</th>     
-                                   </tr>\n''')
+            if not mentores:
+                reporte.write('<p>No hay mentores para esta sede.</p>')
+            else:
+                for mentor in mentores:
+                    mentorNombre = mentor[1][0]
+                    mentorCarnet = mentor[0]
+                    reporte.write(f'''<h3>Mentor: {mentorNombre}</h3>
+                                  <table border='1'>
+                                       <tr bgcolor="0C9208">
+                                            <th style="color: white;"> </th>
+                                            <th style="color: white;">Carnet del estudiante</th>
+                                            <th style="color: white;">Nombre del estudiante</th>     
+                                       </tr>\n''')
 
-                estudiantes_asignados = []
-                contador = 1  
+                    estudiantesAsignados = []
+                    contador = 1  
 
-                for carnet, estudiante_info in diccEstudiantes.items():
-                    if estudiante_info[-1] == mentor_carnet:
-                        estudiantes_asignados.append((carnet, estudiante_info[0]))
+                    for carnet, estudianteInfo in diccEstudiantes.items():
+                        if estudianteInfo[-1] == mentorCarnet:
+                            estudiantesAsignados.append((carnet, estudianteInfo[0]))
 
-                if estudiantes_asignados:
-                    for carnet, nombre_estudiante in estudiantes_asignados:
-                        tupla=nombre_estudiante
-                        nombre=tupla[0]
-                        papellido=tupla[1]
-                        sapellido= tupla[2]
-                        reporte.write(f'''
-                                    <tr  style="background-color: #D7BCE9;">
-                                    <td align="center">{contador}</td>
-                                    <td align="center">{carnet}</td>
-                                    <td align="center">{nombre + " " + papellido + " "+ sapellido}</td>
-                                </tr>\n''')
-                        contador += 1
-                else:
-                    reporte.write('<p>No hay estudiantes asignados a este mentor.</p>')
-                reporte.write('''</table>\n''')
+                    if estudiantesAsignados:
+                        for carnet, nombreEstudiante in estudiantesAsignados:
+                            tupla=nombreEstudiante
+                            nombre=tupla[0]
+                            papellido=tupla[1]
+                            sapellido= tupla[2]
+                            reporte.write(f'''
+                                        <tr  style="background-color: #D7BCE9;">
+                                        <td align="center">{contador}</td>
+                                        <td align="center">{carnet}</td>
+                                        <td align="center">{nombre + " " + papellido + " "+ sapellido}</td>
+                                    </tr>\n''')
+                            contador += 1
+                    else:
+                        reporte.write('<p>No hay estudiantes asignados a este mentor.</p>')
+                    reporte.write('''</table>\n''')
 
         reporte.write('''</body>
                         </html>''')
@@ -163,6 +200,13 @@ def generarReporteMentor(diccMentores, diccEstudiantes):
     print("Reporte por mentor generado con éxito.")
 
 def extraerInfoCarrera(diccEstudiantes,lista):
+    """Funcionamiento: Esta función extrae información específica de los estudiantes cuyos carnets coinciden con los elementos de una lista dada. La información se obtiene del diccionario diccEstudiantes.
+        Entradas:
+            diccEstudiantes [dict]: Un diccionario con información de estudiantes.
+            lista [list]: Una lista de carnets de estudiantes de interés.
+        Salidas: 
+            Una lista que contiene la información de los estudiantes cuyos carnets coinciden con los elementos de la lista proporcionada.
+    """
     info=[]
     for estudiante in diccEstudiantes.keys():
         for i in lista:
@@ -172,6 +216,14 @@ def extraerInfoCarrera(diccEstudiantes,lista):
     return info
 
 def generarReporteCarrera(estructura, diccEstudiantes, carrera):
+    """Funcionamiento: Esta función genera un informe en formato HTML que muestra información sobre estudiantes inscritos en una carrera específica. Utiliza la estructura de carreras, el diccionario diccEstudiantes y el nombre de la carrera como entrada. El informe incluye detalles como el nombre del estudiante, teléfono, correo institucional, sede del estudiante y carnet del mentor.
+        Entradas:
+            estructura [dict]: Un diccionario que contiene información sobre las carreras en diferentes sedes.
+            diccEstudiantes [dict]: Un diccionario con información de los estudiantes.
+            carrera [str]: El nombre de la carrera de interés.
+        Salidas: 
+            No tiene salidas directas, pero crea un archivo HTML que contiene el informe.
+    """
     with open("Reporte por carrera.html", "w", encoding="utf-8") as reporte:
         reporte.write('''<html>
                            <head>
@@ -218,6 +270,13 @@ def generarReporteCarrera(estructura, diccEstudiantes, carrera):
     print("Reporte por carrera generado con éxito.")
 
 def extraerInformacionSede(diccEstudiantes,lista):
+    """Funcionamiento: Esta función extrae información específica de los estudiantes cuyos carnets coinciden con los elementos de una lista dada. La información se obtiene del diccionario diccEstudiantes.
+        Entradas:
+            diccEstudiantes [dict]: Un diccionario con información de estudiantes.
+            lista [list]: Una lista de carnets de estudiantes de interés.
+        Salidas: 
+            Una lista que contiene la información de los estudiantes cuyos carnets coinciden con los elementos de la lista proporcionada.
+    """
     info=[]
     for estudiante in diccEstudiantes.keys():
         for i in lista:
@@ -227,6 +286,14 @@ def extraerInformacionSede(diccEstudiantes,lista):
     return info
 
 def generarReporteSede(estructura, diccEstudiantes, inicialesSedes):
+    """Funcionamiento: Esta función genera un informe en formato HTML que muestra información sobre estudiantes inscritos en diferentes carreras y sedes. Utiliza la estructura de carreras, el diccionario diccEstudiantes, y las iniciales de las sedes como entrada. El informe incluye detalles como el nombre del estudiante, teléfono, correo institucional, carrera, y carnet del mentor.
+        Entradas:
+            estructura [dict]: Un diccionario que contiene información sobre las carreras en diferentes sedes.
+            diccEstudiantes [dict]: Un diccionario con información de los estudiantes.
+            inicialesSedes [dict]: Un diccionario que relaciona iniciales de sedes con nombres completos de sedes.
+        Salidas: 
+            No tiene salidas directas, pero crea un archivo HTML que contiene el informe.
+    """
     with open("Reporte por sede.html", "w", encoding="utf-8") as reporte:
         reporte.write('''<html>
                            <head>
@@ -235,8 +302,8 @@ def generarReporteSede(estructura, diccEstudiantes, inicialesSedes):
                            <body>
                                <h1>Reporte por sede.</h1>''')
         for sede in estructura.keys():
-            sede_nombre = obtener_clave_por_valor(inicialesSedes, sede)
-            reporte.write(f'<h2>{sede_nombre}</h2>')
+            sedeNombre = extraerLlavePorValor(inicialesSedes, sede)
+            reporte.write(f'<h2>{sedeNombre}</h2>')
 
             reporte.write('''<table border='1'>
                                <tr bgcolor="0C9208">
@@ -277,6 +344,14 @@ def generarReporteSede(estructura, diccEstudiantes, inicialesSedes):
     print("Reporte por sede generado con éxito.")
 
 def extraerMentoresSedeCarrera(diccMentores, sede, carrera):
+    """Funcionamiento: Esta función extrae a los mentores de una sede y carrera específica del diccionario diccMentores.
+        Entradas:
+            diccMentores [dict]: Un diccionario con información de los mentores.
+            sede [str]: La sede de interés.
+            carrera [str]: La carrera de interés.
+        Salidas: 
+            Una lista de mentores que corresponden a la sede y carrera especificadas.
+    """
     mentoresCarrera = []
     for mentor in diccMentores[sede]:
         carreraMentor = mentor[2]
@@ -285,6 +360,14 @@ def extraerMentoresSedeCarrera(diccMentores, sede, carrera):
     return mentoresCarrera
 
 def extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera):
+    """Funcionamiento: Esta función extrae a los estudiantes de una sede y carrera específica del diccionario diccEstudiantes.
+        Entradas:
+            diccEstudiantes [dict]: Un diccionario con información de estudiantes.
+            sede [str]: La sede de interés.
+            carrera [str]: La carrera de interés.
+        Salidas: 
+            Una lista de carnets de estudiantes que corresponden a la sede y carrera especificadas.
+    """
     estudiantesCarreraSede = []
     for estudiante in diccEstudiantes.keys():
         sedeEstudiante = diccEstudiantes[estudiante][3]  
@@ -294,6 +377,14 @@ def extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera):
     return estudiantesCarreraSede
 
 def asignarMentores(diccEstudiantes, diccMentores, estructura):
+    """Funcionamiento: Esta función asigna mentores a los estudiantes en base a la estructura de carreras y sedes, asegurándose de que los estudiantes se asignen de manera equitativa a los mentores disponibles, con un máximo de 5 estudiantes por mentor.
+        Entradas:
+            diccEstudiantes [dict]: Un diccionario con información de los estudiantes.
+            diccMentores [dict]: Un diccionario con información de los mentores.
+            estructura [dict]: Un diccionario que contiene información sobre las carreras en diferentes sedes.
+        Salidas: 
+            Un diccionario actualizado de estudiantes con los carnets de sus mentores asignados.
+    """
     for sede in estructura.keys():
         for carrera in estructura[sede]:
             estudiantesSedeCarrera = extraerEstudiantesSedeCarrera(diccEstudiantes, sede, carrera[0])
@@ -306,20 +397,33 @@ def asignarMentores(diccEstudiantes, diccMentores, estructura):
             estudiantesMentor = cantidadEstudiantes // cantidadMentores
             estudiantesSobrantes = cantidadEstudiantes % cantidadMentores
             i = 0
+            estudiantes_asignados = 0
             for mentor in mentores:
                 asignarEstudiantes = estudiantesMentor
                 if estudiantesSobrantes > 0:
                     asignarEstudiantes += 1
                     estudiantesSobrantes -= 1
                 for i in range(asignarEstudiantes):
-                    
-                    estudiante = estudiantesSedeCarrera[i]
-                    diccEstudiantes[estudiante][5] = mentor[0] 
-                    i += 1
+                    if estudiantes_asignados < 5:
+                        estudiante = estudiantesSedeCarrera[i]
+                        diccEstudiantes[estudiante][5] = mentor[0]
+                        i += 1
+                        estudiantes_asignados += 1
 
     return diccEstudiantes
 
+
 def generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalCorreos,diccMentores):
+    """Funcionamiento: Esta función genera carnets para los mentores. Utiliza la estructura de carreras y sedes, así como un conjunto de carnets y correos existentes, para asignar un carnet único a cada mentor y garantizar que no haya duplicados. Los datos generados se almacenan en el diccionario diccMentores.
+        Entradas:
+            estructuraCarrerasCantidad [dict]: Un diccionario con información sobre la cantidad de mentores que se generarán para cada carrera en cada sede.
+            codigosSedes [dict]: Un diccionario con códigos de sedes.
+            totalCarnets [list]: Una lista que contiene todos los carnets existentes.
+            totalCorreos [list]: Una lista que contiene todos los correos existentes.
+            diccMentores [dict]: Un diccionario que almacenará los datos de los mentores.
+        Salidas: 
+            El diccionario diccMentores actualizado con la información de los mentores y las listas totalCarnets y totalCorreos que contienen los nuevos carnets y correos generados.
+    """
     for sede in estructuraCarrerasCantidad.keys():
         listaMentores=[]
         for i,carrera in enumerate(estructuraCarrerasCantidad[sede]):
@@ -347,6 +451,12 @@ def generarCarnetsMentores(estructuraCarrerasCantidad,codigosSedes,totalCarnets,
     return diccMentores,totalCarnets,totalCorreos
 
 def obtenerSedesCarreras(inicialesSedes):
+    """Funcionamiento: Esta función obtiene información sobre las carreras en diferentes sedes a partir de una URL. Utiliza solicitudes web para acceder al contenido de la URL y BeautifulSoup para analizar el HTML y extraer los nombres de las carreras por sede.
+        Entradas:
+            inicialesSedes [dict]: Un diccionario que relaciona las iniciales de las sedes con los nombres completos de las sedes.
+        Salidas: 
+            Un diccionario que contiene las carreras por sede.
+    """
     carrerasSede = {}
     resp = requests.get(urlSedes)
     if resp.status_code == 200:
@@ -362,6 +472,13 @@ def obtenerSedesCarreras(inicialesSedes):
     return carrerasSede
 
 def generarNumCarnet(gen,sede):
+    """Funcionamiento: Esta función genera un número de carnet basado en una sede y un número aleatorio. La estructura del carnet varía dependiendo del valor del argumento gen.
+        Entradas:
+            gen [int]: Un valor que determina la estructura del carnet (1 o 2).
+            sede [str]: Un código de sede.
+        Salidas: 
+            Un número de carnet generado de acuerdo a la estructura.
+    """
     numRandom = random.randint(1000, 9999)
     if gen == 1:
         nuevoCarnet = "2024" + sede + str(numRandom)
@@ -370,6 +487,16 @@ def generarNumCarnet(gen,sede):
     return nuevoCarnet
 
 def generarDatos(opcion,pnombre,papellido1):
+    """Funcionamiento: Esta función genera datos aleatorios como nombres, apellidos, teléfonos y correos electrónicos basados en las opciones proporcionadas.
+        Entradas:
+            opcion [int]: Un valor que determina qué tipo de dato se generará (1, 2 o 3).
+            pnombre [str]: El primer nombre (solo para opción 3).
+            papellido1 [str]: El primer apellido (solo para opción 3).
+        Salidas:
+            Para opción 1: una tupla que contiene un nombre completo, un número de teléfono y un correo electrónico.
+            Para opción 2: un número de teléfono aleatorio.
+            Para opción 3: un correo electrónico generado con base en el primer nombre y primer apellido dados.
+    """
     if opcion == 1:
         fake=Faker()
         nombre = fake.first_name()
@@ -386,6 +513,18 @@ def generarDatos(opcion,pnombre,papellido1):
         return pnombre[:3]+papellido1+str(num)+"@estudiantec.cr"
         
 def generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigosSedes,totalCarnets,totalNumeros,totalCorreos,diccEstudiantes):
+    """Funcionamiento: Esta función genera carnets para los estudiantes. Utiliza la estructura de carreras y sedes, así como un conjunto de carnets, números de teléfono y correos existentes, para asignar un carnet único a cada estudiante y garantizar que no haya duplicados. Los datos generados se almacenan en el diccionario diccEstudiantes.
+        Entradas:
+            totalAdmitidos [dict]: Un diccionario que contiene la cantidad de admitidos por sede.
+            estructuraCarrerasCantidad [dict]: Un diccionario con información sobre la cantidad de estudiantes que se generarán para cada carrera en cada sede.
+            codigosSedes [dict]: Un diccionario con códigos de sedes.
+            totalCarnets [list]: Una lista que contiene todos los carnets existentes.
+            totalNumeros [list]: Una lista que contiene todos los números de teléfono existentes.
+            totalCorreos [list]: Una lista que contiene todos los correos existentes.
+            diccEstudiantes [dict]: Un diccionario que almacenará los datos de los estudiantes.
+        Salidas: 
+            El diccionario diccEstudiantes actualizado con la información de los estudiantes y las listas totalCarnets, totalNumeros y totalCorreos que contienen los nuevos carnets, números de teléfono y correos generados.
+    """
     
     for sede in totalAdmitidos.keys():
         print("generando carnets de estudiantes")
@@ -417,20 +556,28 @@ def generarCarnetsEstudiantes(totalAdmitidos, estructuraCarrerasCantidad,codigos
     return diccEstudiantes,totalCarnets,totalNumeros,totalCorreos
 
 def validarCorreo(correo):
+    """Funcionamiento: Esta función valida si una dirección de correo electrónico cumple con un formato determinado utilizando una expresión regular. Si el correo cumple con el formato, la función devuelve True, de lo contrario, devuelve False.
+        Entradas:
+            correo [str]: La dirección de correo electrónico que se va a validar.
+        Salidas:
+            True si el correo cumple con el formato especificado.
+            False si el correo no cumple con el formato especificado.
+    """
     if re.match(formato,correo):
         return True
     else:
         return False
-
-def imprimir_diccionario(diccionario):
-    print("{")
+       
+def extraerLlavePorValor(diccionario, valorBuscado):
+    """Funcionamiento: Esta función busca una clave en un diccionario que corresponda a un valor específico. Recorre el diccionario y compara el valor deseado con los valores de las claves. Si encuentra una coincidencia, devuelve la clave. Si no se encuentra ninguna coincidencia, se devuelve None.
+        Entradas:
+            diccionario [dict]: El diccionario en el que se busca la clave.
+            valorBuscado [any]: El valor que se desea encontrar en el diccionario.
+        Salidas:
+            La clave que corresponde al valor buscado.
+            None si no se encuentra una clave que coincida con el valor buscado.
+    """
     for clave, valor in diccionario.items():
-        print("'",clave,"'" ":", valor,",")
-    print("}")        
-
-def obtener_clave_por_valor(diccionario, valor_buscado):
-    for clave, valor in diccionario.items():
-        if valor == valor_buscado:
+        if valor == valorBuscado:
             return clave
-    # Si no se encuentra el valor, puedes devolver None u otro valor predeterminado.
     return None
