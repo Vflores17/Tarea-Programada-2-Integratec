@@ -27,12 +27,6 @@ formato=r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$"
 #Definición de funciones
 
 def enviarCorreo(correo):
-    """Funcionamiento: Esta función se encarga de enviar un correo electrónico con archivos adjuntos a una dirección de correo específica. Utiliza el protocolo SMTP y una cuenta de correo configurada para este propósito. Adjunta archivos que cumplan con un formato específico desde el directorio de trabajo actual.
-        Entradas:
-            correo [str]: La dirección de correo electrónico a la que se enviará el mensaje.
-        Salidas: 
-            No tiene salidas directas, pero envía un correo electrónico con archivos adjuntos a la dirección proporcionada.
-    """
     servidor = 'smtp.gmail.com'  
     usuario = 'floresvidal001@gmail.com'  
     contra = 'dwrdpvkpqbsfvfhx' 

@@ -252,7 +252,7 @@ def opcionActualizarEstudiante():
         elif len(info)>0 and seccion==3:
             global totalNumeros
             try:
-                if info.isdigit() and len(info)==8:
+                if info.isdigit() and len(info)==8 and info[0] in ["6","7","8","9"]:
                     if int(info) not in totalNumeros:
                         diccEstudiantes[carnet][1]=int(info)
                         ventanaActualizarNombre.destroy()
@@ -260,7 +260,7 @@ def opcionActualizarEstudiante():
                         messagebox.showerror("Error", "El número ingresado ya existe.")
                         cajaTexto.delete(0,END)
                 else:
-                    messagebox.showerror("Error", "El número ingresado no tiene el formato correcto.") 
+                    messagebox.showerror("Error", "El número ingresado debe tener 8 digitos y deben empezar con 6, 7, 8 o 9.") 
                     cajaTexto.delete(0,END)
             except:
                 messagebox.showerror("Error", "El número ingresado no es válido.")  
@@ -572,6 +572,9 @@ def crearMentores():
         
         for i, sede in enumerate(sedes, start=1):
             for j in range(1, 2):
+                print(sede[0])
+                print(sede[1:])
+                print(sede)
                 contenido = "\n".join([f"{sede[0]}: {sede[1:]}" for sede in diccMentores.get(sede, [])])
 
                 text = tk.Text(ventanaMentores, width=130 if j == 1 else 10, height=4, relief="solid")
